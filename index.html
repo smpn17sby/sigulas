@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sigulas - SMPN 17 Surabaya</title>
+    <!-- Link Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2c3e50">
 </head>
 <body>
 
@@ -16,19 +16,26 @@
         <p>Sistem Informasi Guru SMP Negeri 17 Surabaya</p>
     </header>
 
+    <!-- Tombol Install (Sembunyi secara default) -->
+    <div id="install-banner" class="hidden">
+        <button id="btn-install"><i class="fas fa-download"></i> Pasang Aplikasi (Install)</button>
+    </div>
+
     <main class="grid-container">
-        <!-- Menu List -->
-        <a href="#" class="grid-item"><span>Beranda</span></a>
-        <a href="#" class="grid-item"><span>Absensi Siswa</span></a>
-        <a href="#" class="grid-item"><span>Rekap Absensi</span></a>
-        <a href="#" class="grid-item"><span>Wali Kelas</span></a>
-        <a href="#" class="grid-item"><span>PMA</span></a>
-        <a href="#" class="grid-item"><span>Jadwal Pelajaran</span></a>
-        <a href="#" class="grid-item"><span>Absensi Rapat</span></a>
-        <a href="#" class="grid-item"><span>Galeri Kegiatan</span></a>
-        <a href="#" class="grid-item"><span>Galeri Adiwiyata</span></a>
-        <a href="#" class="grid-item"><span>SKPBM</span></a>
-        <a href="#" class="grid-item"><span>Kalender Pendidikan</span></a>
+        <!-- Contoh format menu dengan ikon -->
+        <a href="#" class="grid-item"><i class="fas fa-home"></i><span>Beranda</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-user-check"></i><span>Absensi Siswa</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-file-alt"></i><span>Rekap Absensi</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-chalkboard-teacher"></i><span>Wali Kelas</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-chart-line"></i><span>PMA</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-calendar-alt"></i><span>Jadwal</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-users"></i><span>Absensi Rapat</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-camera"></i><span>Galeri</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-leaf"></i><span>Galeri Adiwiyata</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-file-signature"></i><span>SKPBM</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-book"></i><span>Kalender</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-user-slash"></i><span>Tugas Guru Izin</span></a>
+        <a href="#" class="grid-item"><i class="fas fa-eye"></i><span>Lihat Tugas Izin</span></a>
     </main>
 
     <script src="app.js"></script>
