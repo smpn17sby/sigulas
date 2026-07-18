@@ -44,3 +44,14 @@ header p { margin: 5px 0 0; opacity: 0.8; font-size: 0.9rem; }
     color: white;
     transform: translateY(-5px);
 }
+/* Tambahan untuk Ikon dan Banner */
+.grid-item i { font-size: 2rem; margin-bottom: 10px; color: #2c3e50; }
+.grid-item span { display: block; font-size: 0.8rem; }
+
+#install-banner { text-align: center; padding: 15px; }
+#btn-install { 
+    background: #27ae60; color: white; border: none; padding: 12px 25px; 
+    border-radius: 25px; cursor: pointer; font-weight: bold; 
+}
+.hidden { display: none; }
+
