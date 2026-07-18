@@ -1,7 +1,25 @@
+// Registrasi Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(() => console.log('Service Worker terdaftar'))
-      .catch((err) => console.log('Gagal mendaftar:', err));
-  });
+    navigator.serviceWorker.register('/sw.js');
 }
+
+// Logika Install Prompt
+let deferredPrompt;
+const btnInstall = document.getElementById('btn-install');
+const banner = document.getElementById('install-banner');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    banner.classList.remove('hidden'); // Tampilkan tombol
+});
+
+btnInstall.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+            if (choice.outcome === 'accepted') banner.classList.add('hidden');
+            deferredPrompt = null;
+        });
+    }
+});
