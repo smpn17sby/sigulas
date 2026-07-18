@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e4070;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16315a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background dengan rounded corners -->
+  <rect width="192" height="192" rx="38" fill="url(#bgGrad)"/>
+  
+  <!-- Teks SG dengan shadow -->
+  <text x="96" y="128" 
+        font-size="95" 
+        font-weight="bold" 
+        fill="white" 
+        font-family="Arial, sans-serif" 
+        text-anchor="middle"
+        filter="url(#shadow)">SG</text>
+</svg>
