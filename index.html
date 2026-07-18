@@ -9,12 +9,12 @@
   <meta name="theme-color" content="#1e4070">
   <meta name="description" content="Sistem Informasi Guru - SIGULAS">
   
-  <!-- iOS PWA Support - HILANGKAN UI SAFARI -->
+  <!-- iOS PWA Support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SIGULAS">
   
-  <!-- Android PWA Support - HILANGKAN UI CHROME -->
+  <!-- Android PWA Support -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="SIGULAS">
   <meta name="msapplication-TileColor" content="#1e4070">
@@ -36,6 +36,7 @@
       flex-direction: column;
       align-items: center;
       position: relative;
+      overflow-x: hidden;
     }
     body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(240, 243, 248, 0.88); z-index: -1; }
     
@@ -49,7 +50,6 @@
       position: relative;
     }
 
-    /* ===== HEADER - TANPA TOMBOL ADMIN ===== */
     .app-header {
       display: flex;
       align-items: center;
@@ -104,7 +104,6 @@
     .hero-card .btn-hero { background: #ffb74d; border: none; color: #1e3a6f; font-weight: 700; font-size: 15px; padding: 11px 22px; border-radius: 60px; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.2s; text-decoration: none; }
     .hero-card .btn-hero:hover { transform: scale(1.02); background: #ffa726; }
 
-    /* ===== MENU GRID ===== */
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -112,7 +111,6 @@
       margin: 16px 0 10px;
     }
     
-    /* ===== CARD MENU - WARNA KONTRAS TINGGI ===== */
     .menu-grid-item {
       border-radius: 16px;
       padding: 18px 8px 14px;
@@ -179,7 +177,6 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.15);
     }
     
-    /* ===== 8 WARNA CARD SOLID KONTRAS ===== */
     .card-color-0 { background: linear-gradient(135deg, #1976d2, #1565c0); color: white; }
     .card-color-0 .label, .card-color-0 .sub { color: white; }
     
@@ -205,7 +202,6 @@
     .card-color-7 { background: linear-gradient(135deg, #d32f2f, #c62828); color: white; }
     .card-color-7 .label, .card-color-7 .sub { color: white; }
 
-    /* ===== BOTTOM NAVIGATION - TANPA PROFIL ===== */
     .bottom-nav {
       display: flex;
       justify-content: space-around;
@@ -262,7 +258,6 @@
     }
     .toast.show { opacity: 1; }
 
-    /* ===== INSTALL BANNER ===== */
     .install-banner {
       background: linear-gradient(135deg, #8e24aa, #6a1b9a);
       color: white;
@@ -296,7 +291,6 @@
       opacity: 0.8;
     }
 
-    /* ===== RESPONSIVE ===== */
     @media (min-width: 600px) {
       .app-container { padding: 20px; }
       .app-title { font-size: 28px; }
@@ -381,7 +375,6 @@
 <div id="toast" class="toast">🔗 Membuka...</div>
 
 <script>
-  // ===== REGISTER SERVICE WORKER =====
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js')
@@ -390,28 +383,26 @@
     });
   }
 
-  // ===== APLIKASI UTAMA =====
   (function() {
     const toast = document.getElementById('toast');
     let toastTimer = null;
     let deferredPrompt = null;
 
-    // Menu data statis (tidak bisa diedit)
     const menuData = [
       { icon: '📝', label: 'Absensi Siswa', url: 'https://sigulas.demo/absensi-siswa', sub: '' },
       { icon: '📊', label: 'Rekap Absensi Siswa', url: 'https://sigulas.demo/rekap-absensi', sub: '' },
       { icon: '📋', label: 'Absensi Rapat Guru', url: 'https://sigulas.demo/absen-rapat', sub: '' },
-      { icon: '👨‍🏫', label: 'Wali Kelas', url: 'https://sigulas.demo/wali-kelas', sub: '' },
-      { icon: '🌐', label: 'Portal GTK', url: 'https://sigulas.demo/portal-gtk', sub: '' },
+      { icon: '👨🏫', label: 'Wali Kelas', url: 'https://sigulas.demo/wali-kelas', sub: '' },
+      { icon: '', label: 'Portal GTK', url: 'https://sigulas.demo/portal-gtk', sub: '' },
       { icon: '📌', label: 'Tugas Guru Izin', url: 'https://sigulas.demo/tugas-guru-izin', sub: '' },
-      { icon: '👀', label: 'Lihat Tugas Guru Izin', url: 'https://sigulas.demo/lihat-tugas-guru-izin', sub: '' },
+      { icon: '', label: 'Lihat Tugas Guru Izin', url: 'https://sigulas.demo/lihat-tugas-guru-izin', sub: '' },
       { icon: '📈', label: 'PMA', url: 'https://sigulas.demo/pma', sub: 'Peningkatan Mutu Akademik' },
       { icon: '🌿', label: 'Galeri Adiwiyata', url: 'https://sigulas.demo/galeri-adiwiyata', sub: '' },
       { icon: '🖼️', label: 'Galeri Kegiatan', url: 'https://sigulas.demo/galeri-kegiatan', sub: '' },
-      { icon: '📄', label: 'SKPBM TA 2026-2027', url: 'https://sigulas.demo/skpbm', sub: '' }
+      { icon: '📅', label: 'Kalender Pendidikan 2026-2027', url: 'https://sigulas.demo/kalender', sub: '' },
+      { icon: '', label: 'SKPBM TA 2026-2027', url: 'https://sigulas.demo/skpbm', sub: '' }
     ];
 
-    // ===== PWA INSTALL HANDLER =====
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -433,7 +424,7 @@
 
     async function triggerInstall() {
       if (!deferredPrompt) {
-        showToast('ℹ️ Buka menu browser (⋮) → "Install aplikasi"');
+        showToast('️ Buka menu browser (⋮) → "Install aplikasi"');
         return;
       }
       deferredPrompt.prompt();
@@ -448,7 +439,6 @@
       document.getElementById('installBanner').classList.remove('show');
     });
 
-    // ===== RENDER MENU =====
     function renderMenus() {
       const grid = document.getElementById('menuGrid');
       
@@ -496,7 +486,7 @@
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById('realTimeClock').textContent = `⏰ ${hours}.${minutes}`;
+      document.getElementById('realTimeClock').textContent = ` ${hours}.${minutes}`;
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -523,11 +513,5 @@
     renderMenus();
   })();
 </script>
-</body>
-        </html>        <a href="#" class="grid-item"><i class="fas fa-user-slash"></i><span>Tugas Guru Izin</span></a>
-        <a href="#" class="grid-item"><i class="fas fa-eye"></i><span>Lihat Tugas Izin</span></a>
-    </main>
-
-    <script src="app.js"></script>
 </body>
 </html>
