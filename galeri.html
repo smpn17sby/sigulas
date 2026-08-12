@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galeri • SIGULAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f0f3f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        /* Tombol Kembali */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef2f7;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #1e3a6f;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .back-btn:hover {
+            background: #dce3ed;
+            transform: scale(1.02);
+        }
+        .back-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 10px;
+        }
+
+        .header .icon-big {
+            font-size: 64px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e3a6f;
+            letter-spacing: -0.5px;
+        }
+
+        .header .sub {
+            font-size: 14px;
+            color: #5a6f8a;
+            margin-top: 2px;
+        }
+
+        /* Grid Sub Menu */
+        .submenu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .submenu-item {
+            background: #f8faff;
+            border: 2px solid #eef2f7;
+            border-radius: 20px;
+            padding: 30px 16px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #1e3a6f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efek gradien di bagian bawah */
+        .submenu-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a6f, #4a90d9);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .submenu-item:hover {
+            transform: translateY(-6px);
+            border-color: #1e3a6f;
+            background: #f0f4ff;
+            box-shadow: 0 8px 24px rgba(30, 58, 111, 0.12);
+        }
+
+        .submenu-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        .submenu-item:active {
+            transform: scale(0.96);
+        }
+
+        .submenu-item .sub-icon {
+            font-size: 44px;
+            display: block;
+            background: rgba(30, 58, 111, 0.06);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .submenu-item:hover .sub-icon {
+            background: rgba(30, 58, 111, 0.12);
+            transform: scale(1.05) rotate(-4deg);
+        }
+
+        .submenu-item .sub-label {
+            font-weight: 700;
+            font-size: 16px;
+            color: #1e3a6f;
+        }
+
+        .submenu-item .sub-desc {
+            font-size: 12px;
+            color: #7a8ea8;
+            line-height: 1.4;
+        }
+
+        /* Badge kecil */
+        .submenu-item .badge {
+            background: #1e3a6f;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .submenu-item .badge.green {
+            background: #2e7d32;
+        }
+
+        .submenu-item .badge.gold {
+            background: #f9a825;
+            color: #3e2723;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 12px;
+            color: #a0b2c9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 16px;
+            }
+            .back-btn {
+                position: static;
+                margin-bottom: 16px;
+                display: inline-flex;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header .icon-big {
+                font-size: 48px;
+            }
+            .submenu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+            .submenu-item {
+                padding: 22px 12px 18px;
+            }
+            .submenu-item .sub-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 32px;
+            }
+            .submenu-item .sub-label {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .submenu-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .submenu-item {
+                padding: 18px 12px;
+                flex-direction: row;
+                gap: 16px;
+                text-align: left;
+            }
+            .submenu-item .sub-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 28px;
+                flex-shrink: 0;
+            }
+            .submenu-item .sub-label {
+                font-size: 15px;
+            }
+            .submenu-item .sub-desc {
+                font-size: 11px;
+            }
+            .submenu-item::after {
+                height: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tombol Kembali ke Beranda SIGULAS -->
+        <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+
+        <!-- Header -->
+        <div class="header">
+            <span class="icon-big">🖼️</span>
+            <h1>Galeri Sekolah</h1>
+            <div class="sub">Dokumentasi kegiatan dan prestasi SMP Negeri 17 Surabaya</div>
+        </div>
+
+        <!-- Grid 3 Sub Menu -->
+        <div class="submenu-grid">
+
+            <!-- 1. Galeri Kegiatan -->
+            <a href="#" target="_blank" rel="noopener" class="submenu-item" id="submenu-kegiatan">
+                <span class="sub-icon">📸</span>
+                <div>
+                    <div class="sub-label">Galeri Kegiatan</div>
+                    <div class="sub-desc">Dokumentasi kegiatan sekolah</div>
+                    <span class="badge">📷 2025</span>
+                </div>
+            </a>
+
+            <!-- 2. Galeri Adiwiyata -->
+            <a href="#" target="_blank" rel="noopener" class="submenu-item" id="submenu-adiwiyata">
+                <span class="sub-icon">🌿</span>
+                <div>
+                    <div class="sub-label">Galeri Adiwiyata</div>
+                    <div class="sub-desc">Program sekolah peduli lingkungan</div>
+                    <span class="badge green">🌱 Hijau</span>
+                </div>
+            </a>
+
+            <!-- 3. Foto Guru -->
+            <a href="#" target="_blank" rel="noopener" class="submenu-item" id="submenu-guru">
+                <span class="sub-icon">👨‍🏫</span>
+                <div>
+                    <div class="sub-label">Foto Guru</div>
+                    <div class="sub-desc">Profil guru dan tenaga pendidik</div>
+                    <span class="badge gold">⭐ 2025</span>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="footer-note">
+            Klik sub menu untuk membuka galeri di tab baru.
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  GANTI LINK DI BAWAH INI DENGAN URL ASLI MASING-MASING GALERI
+        // ============================================================
+        const LINKS = {
+            'kegiatan': 'https://drive.google.com/drive/folders/placeholder-kegiatan',
+            'adiwiyata': 'https://drive.google.com/drive/folders/placeholder-adiwiyata',
+            'guru': 'https://drive.google.com/drive/folders/placeholder-guru'
+        };
+
+        // Set href untuk setiap submenu
+        document.getElementById('submenu-kegiatan').href = LINKS['kegiatan'];
+        document.getElementById('submenu-adiwiyata').href = LINKS['adiwiyata'];
+        document.getElementById('submenu-guru').href = LINKS['guru'];
+
+        // Jika link masih placeholder, beri notifikasi saat diklik
+        document.querySelectorAll('.submenu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href.includes('placeholder')) {
+                    e.preventDefault();
+                    alert('🔗 Link galeri belum diatur. Silakan ganti placeholder dengan URL asli di file galeri.html.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

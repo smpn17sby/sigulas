@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi Siswa • SIGULAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f0f3f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.10);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Tombol Kembali di pojok kiri atas */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef2f7;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #1e3a6f;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .back-btn:hover {
+            background: #dce3ed;
+            transform: scale(1.02);
+        }
+        .back-btn:active {
+            transform: scale(0.96);
+        }
+
+        .icon-big {
+            font-size: 72px;
+            display: block;
+            margin: 30px 0 16px;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a6f;
+            margin-bottom: 8px;
+        }
+
+        .sub {
+            color: #5a6f8a;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Tombol peluncur utama */
+        .launch-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e3a6f;
+            color: white;
+            border: none;
+            padding: 16px 44px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(30, 58, 111, 0.3);
+            margin: 10px 0;
+        }
+        .launch-btn:hover {
+            background: #16315a;
+            transform: scale(1.04);
+        }
+        .launch-btn:active {
+            transform: scale(0.96);
+        }
+
+        .note {
+            margin-top: 18px;
+            font-size: 12px;
+            color: #a0b2c9;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 16px;
+            }
+            .back-btn {
+                position: static;
+                margin-bottom: 16px;
+                display: inline-flex;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .icon-big {
+                font-size: 56px;
+            }
+            .launch-btn {
+                font-size: 16px;
+                padding: 14px 28px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tombol Kembali ke Beranda SIGULAS -->
+        <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+
+        <span class="icon-big">📝</span>
+        <h1>Absensi Siswa</h1>
+        <p class="sub">Aplikasi absensi harian siswa. Pastikan semua siswa terdata dengan benar sebelum batas waktu.</p>
+
+        <!-- Tombol Peluncur (langsung buka Apps Script di tab baru) -->
+        <a href="https://script.google.com/macros/s/placeholder-absensi-siswa/exec" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="launch-btn">
+            🚀 Buka Aplikasi Absensi
+        </a>
+
+        <p class="note">Aplikasi akan terbuka di tab baru. Tutup tab untuk kembali ke sini.</p>
+    </div>
+
+    <script>
+        // ============================================================
+        //  GANTI LINK APPS SCRIPT DI BAWAH INI DENGAN LINK ASLI ANDA
+        // ============================================================
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZNy9uOE9HaOO7BlJTGmULTC3rL5Py2ViSekEWdS-F5l7gfOQUuVns_XDKbqmk2-A/exec';
+
+        // Update tombol dengan URL yang benar
+        document.querySelector('.launch-btn').href = APPS_SCRIPT_URL;
+    </script>
+</body>
+</html>

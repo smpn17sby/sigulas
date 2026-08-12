@@ -1,0 +1,349 @@
+<!DOCTYPE html> 
+<html lang="id"> 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+  <title>Data Wali Kelas – SMPN 17 Surabaya</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #f5f5f5);
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative; /* untuk posisi tombol kembali absolut */
+    }
+
+    /* ===== TOMBOL KEMBALI ===== */
+    .back-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      padding: 8px 18px;
+      border-radius: 40px;
+      text-decoration: none;
+      color: #0277bd;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.2s;
+      border: 2px solid #b3e5fc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      z-index: 10;
+    }
+    .back-btn:hover {
+      background: white;
+      border-color: #0288d1;
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(2, 136, 209, 0.2);
+    }
+    .back-btn:active {
+      transform: scale(0.96);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 25px 20px 20px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .logo {
+      width: 80px;
+      height: auto;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #0277bd;
+      margin-bottom: 4px;
+    }
+
+    .tahun-ajaran {
+      font-size: 18px;
+      color: #01579b;
+      font-weight: 600;
+      margin: 6px 0;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      font-weight: 700;
+      color: #d32f2f;
+      margin-top: 4px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #01579b;
+      font-size: 14px;
+    }
+
+    select {
+      padding: 12px 16px;
+      border: 2px solid #b3e5fc;
+      border-radius: 12px;
+      font-size: 16px;
+      background-color: white;
+      outline: none;
+      transition: all 0.3s;
+      min-width: 180px;
+    }
+
+    select:focus {
+      border-color: #0288d1;
+      box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2);
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: #0288d1;
+      color: white;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+
+    tbody tr:hover {
+      background-color: #f0f9ff;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #777;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .filters {
+        flex-direction: column;
+        align-items: center;
+      }
+      select {
+        width: 100%;
+        max-width: 300px;
+      }
+      th, td {
+        padding: 12px 10px;
+        font-size: 14px;
+      }
+      .logo {
+        width: 70px;
+      }
+      .back-btn {
+        position: static;
+        margin-bottom: 16px;
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- TOMBOL KEMBALI KE BERANDA SIGULAS -->
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+    </a>
+
+    <header>
+      <img src="https://imagizer.imageshack.com/v2/320x240q70/921/ghXnmV.jpg" alt="Logo SMPN 17 Surabaya" class="logo">
+      <h1>SMP NEGERI 17 SURABAYA</h1>
+      <div class="tahun-ajaran">Tahun Pelajaran 2025–2026</div>
+      <div class="subtitle">Data Wali Kelas</div>
+    </header>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label for="jenjang"><i class="fas fa-layer-group"></i> Jenjang</label>
+        <select id="jenjang">
+          <option value="7">Kelas VII</option>
+          <option value="8">Kelas VIII</option>
+          <option value="9">Kelas IX</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="kelas"><i class="fas fa-school"></i> Kelas</label>
+        <select id="kelas">
+          <option value="">Semua Kelas</option>
+          <!-- Diisi otomatis -->
+        </select>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table id="hasil">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Wali Kelas</th>
+            <th>Kelas</th>
+            <th>NIP</th>
+          </tr>
+        </thead>
+        <tbody id="tabel-body">
+          <!-- Data akan muncul di sini -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // ✅ DATA WALI KELAS DENGAN PERUBAHAN NAMA SESUAI PERMINTAAN
+    const dataWaliKelas = [
+      { no: 1, nama: "Ma'Arif Setiawan, S.Pd.", kelas: "7A", nip: "199108232024211022" },
+      { no: 2, nama: "Imam Safawi, S.Si.", kelas: "7B", nip: "197905242022211007" },
+      { no: 3, nama: "Zubaidah, S.Pd", kelas: "7C", nip: "196605032007012014" },
+      { no: 4, nama: "Millenia Tri Budi Harianto, S.Pd.", kelas: "7D", nip: "196605051989011007" },
+      { no: 5, nama: "Ainun Jariyah, S.Pd.", kelas: "7E", nip: "199905172024212022" },
+      { no: 6, nama: "Monik Endah Kurniawati, S.Pd", kelas: "7F", nip: "198303042022212038" },
+      { no: 7, nama: "Evyna Untari, S.Pd.", kelas: "7G", nip: "197705042008012029" },
+      { no: 8, nama: "Anggit Dwi Kuncoro, S.Pd", kelas: "7H", nip: "199705172024211020" },
+      { no: 9, nama: "Masruroh, S.Pd.I", kelas: "7I", nip: "196903232014122001" },
+      { no: 10, nama: "Marendra Setia Nugraha, M.Pd", kelas: "7J", nip: "3578041203910005" },
+      { no: 11, nama: "Nur Wahid Asnawi, S.Pd.", kelas: "8A", nip: "199203162024211020" },
+      { no: 12, nama: "Alfia Rachmawati, S.Pd.", kelas: "8B", nip: "198510062023212029" },
+      { no: 13, nama: "Dewi Purnama Sari, S.Pd.", kelas: "8C", nip: "199305222022212016" },
+      { no: 14, nama: "Achijati Pudji Lestari, S.Pd.", kelas: "8J", nip: "196906082024212003" },
+      { no: 15, nama: "Risky Dwi Andrianingtyas, S.Pd", kelas: "8E", nip: "198610282011012020" },
+      { no: 16, nama: "Tania Lutfi, S.Pd.", kelas: "8F", nip: "199911262024212022" },
+      { no: 17, nama: "Sulastri, S.E.", kelas: "8G", nip: "197901012022212034" },
+      { no: 18, nama: "Zubaidah, S.Pd.", kelas: "8H", nip: "196605032007012014" },
+      { no: 19, nama: "Ayu Sulala, S.Pd.", kelas: "8I", nip: "198901272022212014" },
+      { no: 20, nama: "Drs. Eko Sugiarto", kelas: "8J", nip: "196803262008011003" },
+      { no: 21, nama: "Heni Wijayanti, S.Pd.", kelas: "9A", nip: "198201252010012014" },
+      { no: 22, nama: "Mahmud Nurjihadin, S.Pd.I., M.A.", kelas: "9B", nip: "198204102023211010" },
+      { no: 23, nama: "Betty Agustinintiyas, S.Pd.", kelas: "9C", nip: "199208012022212018" },
+      { no: 24, nama: "Wiwien Asmaul Khusna, S.Pd.", kelas: "9D", nip: "197303292024212004" },
+      { no: 25, nama: "Nur Lailiya, S.Pd.", kelas: "9E", nip: "198108272023212015" },
+      { no: 26, nama: "Suci Lestari, S.Pd.", kelas: "9F", nip: "199403132023212037" },
+      { no: 27, nama: "Rizki Febrianto, S.Pd.", kelas: "9G", nip: " 198702052022211009" },
+      { no: 28, nama: "Wahyu Sayogya Rani, S.Pd", kelas: "9H", nip: "199307162025212013" },
+      { no: 29, nama: "Indah Ariani, S.Pd.", kelas: "9I", nip: "199308162022212014" },
+      { no: 30, nama: "Nalurita Pratiwi, S.Pd.", kelas: "9J", nip: "199501132022212007" }
+    ];
+
+    const jenjangSelect = document.getElementById("jenjang");
+    const kelasSelect = document.getElementById("kelas");
+    const tabelBody = document.getElementById("tabel-body");
+
+    function updateKelasDropdown() {
+      const jenjang = jenjangSelect.value;
+      kelasSelect.innerHTML = '<option value="">Semua Kelas</option>';
+
+      const kelasList = [...new Set(
+        dataWaliKelas
+          .filter(item => item.kelas.startsWith(jenjang))
+          .map(item => item.kelas)
+      )].sort();
+
+      kelasList.forEach(kls => {
+        const opt = document.createElement("option");
+        opt.value = kls;
+        opt.textContent = kls.replace(/^7/, 'VII-').replace(/^8/, 'VIII-').replace(/^9/, 'IX-');
+        kelasSelect.appendChild(opt);
+      });
+    }
+
+    function tampilkanData() {
+      const jenjang = jenjangSelect.value;
+      const kelasFilter = kelasSelect.value;
+
+      let filtered = dataWaliKelas.filter(item => item.kelas.startsWith(jenjang));
+
+      if (kelasFilter) {
+        filtered = filtered.filter(item => item.kelas === kelasFilter);
+      }
+
+      if (filtered.length === 0) {
+        tabelBody.innerHTML = `<tr><td colspan="4" class="empty">Tidak ada data wali kelas ditemukan.</td></tr>`;
+        return;
+      }
+
+      tabelBody.innerHTML = filtered.map(item => `
+        <tr>
+          <td>${item.no}</td>
+          <td>${item.nama}</td>
+          <td>${item.kelas.replace(/^7/, 'VII-').replace(/^8/, 'VIII-').replace(/^9/, 'IX-')}</td>
+          <td>${item.nip}</td>
+        </tr>
+      `).join("");
+    }
+
+    jenjangSelect.addEventListener("change", () => {
+      updateKelasDropdown();
+      tampilkanData();
+    });
+
+    kelasSelect.addEventListener("change", tampilkanData);
+
+    // Inisialisasi awal
+    updateKelasDropdown();
+    tampilkanData();
+  </script>
+
+</body>
+</html>

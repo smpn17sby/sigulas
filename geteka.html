@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Layanan GTK • SIGULAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f0f3f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        /* Tombol Kembali */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef2f7;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #1e3a6f;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .back-btn:hover {
+            background: #dce3ed;
+            transform: scale(1.02);
+        }
+        .back-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e3a6f;
+            letter-spacing: -0.5px;
+        }
+
+        .header .sub {
+            font-size: 14px;
+            color: #5a6f8a;
+            margin-top: 2px;
+        }
+
+        /* Grid Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .menu-item {
+            background: #f8faff;
+            border: 2px solid #eef2f7;
+            border-radius: 16px;
+            padding: 24px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: #1e3a6f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-item:hover {
+            transform: translateY(-4px);
+            border-color: #1e3a6f;
+            background: #f0f4ff;
+            box-shadow: 0 6px 16px rgba(30, 58, 111, 0.10);
+        }
+        .menu-item:active {
+            transform: scale(0.96);
+        }
+        .menu-item .icon {
+            font-size: 32px;
+        }
+        .menu-item .label {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .menu-item .desc {
+            font-size: 11px;
+            color: #7a8ea8;
+            line-height: 1.3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 16px;
+            }
+            .back-btn {
+                position: static;
+                margin-bottom: 16px;
+                display: inline-flex;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .logo {
+                width: 70px;
+            }
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .menu-item {
+                padding: 18px 10px;
+            }
+            .menu-item .icon {
+                font-size: 28px;
+            }
+            .menu-item .label {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .menu-item {
+                padding: 14px 8px;
+            }
+            .menu-item .icon {
+                font-size: 24px;
+            }
+            .menu-item .label {
+                font-size: 12px;
+            }
+            .menu-item .desc {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Tombol Kembali ke Beranda SIGULAS -->
+        <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+
+        <!-- Header dengan logo lokal -->
+        <div class="header">
+            <img src="kemendikdasmen.png" alt="Kemendikdasmen" class="logo" />
+            <h1>Portal Layanan GTK</h1>
+            <div class="sub">SMP Negeri 17 Surabaya</div>
+        </div>
+
+        <!-- Grid Menu -->
+        <div class="menu-grid">
+            <!-- Info GTK -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-info-gtk">
+                <span class="icon">📋</span>
+                <span class="label">Info GTK</span>
+                <span class="desc">Informasi Guru &amp; Tenaga Kependidikan</span>
+            </a>
+
+            <!-- ASN Digital -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-asn-digital">
+                <span class="icon">💻</span>
+                <span class="label">ASN Digital</span>
+                <span class="desc">Layanan digital untuk ASN</span>
+            </a>
+
+            <!-- SIM PKB -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-sim-pkb">
+                <span class="icon">📚</span>
+                <span class="label">SIM PKB</span>
+                <span class="desc">Sistem Informasi Pengelolaan Kinerja</span>
+            </a>
+
+            <!-- Pengelolaan Kinerja -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-pengelolaan-kinerja">
+                <span class="icon">📊</span>
+                <span class="label">Pengelolaan Kinerja</span>
+                <span class="desc">Manajemen kinerja guru</span>
+            </a>
+
+            <!-- Rapor Online -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-rapor-online">
+                <span class="icon">📖</span>
+                <span class="label">Rapor Online</span>
+                <span class="desc">Rapor digital siswa</span>
+            </a>
+
+            <!-- E-Docu -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-edocu">
+                <span class="icon">📁</span>
+                <span class="label">E-Docu</span>
+                <span class="desc">Dokumen elektronik</span>
+            </a>
+
+            <!-- Sinau Bareng -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-sinau-bareng">
+                <span class="icon">🎓</span>
+                <span class="label">Sinau Bareng</span>
+                <span class="desc">Belajar bersama</span>
+            </a>
+        </div>
+
+        <p style="text-align:center; margin-top:24px; font-size:12px; color:#a0b2c9;">
+            Klik menu untuk membuka layanan di tab baru.
+        </p>
+    </div>
+
+    <script>
+        // ============================================================
+        //  GANTI LINK DI BAWAH INI DENGAN URL ASLI MASING-MASING LAYANAN
+        // ============================================================
+        const LINKS = {
+            'info-gtk': 'https://info.gtk.kemdikbud.go.id/',
+            'asn-digital': 'https://asn-digital.kemdikbud.go.id/',
+            'sim-pkb': 'https://sim-pkb.kemdikbud.go.id/',
+            'pengelolaan-kinerja': 'https://pengelolaan-kinerja.kemdikbud.go.id/',
+            'rapor-online': 'https://rapor-online.kemdikbud.go.id/',
+            'edocu': 'https://edocu.kemdikbud.go.id/',
+            'sinau-bareng': 'https://sinau-bareng.kemdikbud.go.id/'
+        };
+
+        // Set href untuk setiap menu
+        document.getElementById('menu-info-gtk').href = LINKS['info-gtk'];
+        document.getElementById('menu-asn-digital').href = LINKS['asn-digital'];
+        document.getElementById('menu-sim-pkb').href = LINKS['sim-pkb'];
+        document.getElementById('menu-pengelolaan-kinerja').href = LINKS['pengelolaan-kinerja'];
+        document.getElementById('menu-rapor-online').href = LINKS['rapor-online'];
+        document.getElementById('menu-edocu').href = LINKS['edocu'];
+        document.getElementById('menu-sinau-bareng').href = LINKS['sinau-bareng'];
+
+        // Jika link masih placeholder (mengandung placeholder), beri notifikasi saat diklik
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href.includes('placeholder')) {
+                    e.preventDefault();
+                    alert('🔗 Link layanan belum diatur. Silakan ganti placeholder dengan URL asli di file geteka.html.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

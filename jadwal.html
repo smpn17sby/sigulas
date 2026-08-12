@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Jadwal Pelajaran SMPN 17 Surabaya 2026-2027</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f2f5; color: #333; min-height: 100vh; overflow-x: hidden;
+  }
+  body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding-bottom: 20px; }
+  .app { max-width: 720px; margin: 0 auto; background: #f0f2f5; min-height: 100vh; position: relative; }
+  
+  /* ===== TOMBOL KEMBALI ===== */
+  .back-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    padding: 6px 14px;
+    border-radius: 40px;
+    text-decoration: none;
+    color: #1e3a6f;
+    font-weight: 700;
+    font-size: 12px;
+    transition: 0.2s;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 200;
+  }
+  .back-btn:hover {
+    background: white;
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(30, 58, 111, 0.2);
+  }
+  .back-btn:active {
+    transform: scale(0.96);
+  }
+
+  header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #fff;
+    padding: 18px 16px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    position: relative; /* agar tombol absolute relatif terhadap header */
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  header h1 { font-size: 1.05em; font-weight: 700; line-height: 1.3; margin-bottom: 3px; }
+  header p { font-size: 0.78em; opacity: 0.9; }
+  
+  .controls {
+    background: #fff; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px;
+    border-bottom: 1px solid #e0e0e0; position: sticky; top: 72px; z-index: 99;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .form-group label {
+    display: block; font-size: 0.75em; font-weight: 600; color: #555;
+    margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  select {
+    width: 100%; padding: 11px 12px; border: 2px solid #e0e0e0; border-radius: 10px;
+    font-size: 0.95em; background: #fff; color: #333; font-weight: 500; appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232a5298'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat; background-position: right 10px center;
+    background-size: 20px; padding-right: 36px;
+  }
+  select:focus { outline: none; border-color: #2a5298; }
+  
+  .info-bar {
+    background: #fff; padding: 12px 16px; margin: 10px; border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 0.85em;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .info-row { display: flex; justify-content: space-between; align-items: center; }
+  .info-label { color: #888; font-size: 0.85em; }
+  .info-value { font-weight: 600; color: #1e3c72; text-align: right; }
+  .info-value.mapel {
+    background: #e7f3ff; padding: 3px 10px; border-radius: 12px;
+    color: #2a5298; font-size: 0.9em;
+  }
+  
+  .schedule-list { padding: 0 10px 20px; display: flex; flex-direction: column; gap: 8px; }
+  
+  .jam-card {
+    background: #fff; border-radius: 12px; padding: 12px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; align-items: center;
+    gap: 12px; border-left: 4px solid #2a5298; transition: transform 0.15s;
+  }
+  .jam-card:active { transform: scale(0.99); }
+  
+  .jam-card.khusus { border-left-color: #28a745; background: linear-gradient(135deg, #f0fff4 0%, #fff 100%); }
+  .jam-card.coding { border-left-color: #6f42c1; background: linear-gradient(135deg, #f5f0ff 0%, #fff 100%); }
+  .jam-card.istirahat { border-left-color: #ffc107; background: linear-gradient(135deg, #fffbea 0%, #fff 100%); }
+  .jam-card.sholat { border-left-color: #17a2b8; background: linear-gradient(135deg, #e8f7fa 0%, #fff 100%); }
+  .jam-card.kosong { border-left-color: #ccc; background: #fafafa; }
+  
+  .jam-time { flex-shrink: 0; width: 72px; text-align: center; }
+  .jam-label { font-size: 0.7em; font-weight: 700; color: #2a5298; text-transform: uppercase; letter-spacing: 0.5px; }
+  .jam-card.khusus .jam-label { color: #28a745; }
+  .jam-card.coding .jam-label { color: #6f42c1; }
+  .jam-card.istirahat .jam-label { color: #b8860b; }
+  .jam-card.sholat .jam-label { color: #0c7a8f; }
+  .jam-card.kosong .jam-label { color: #999; }
+  
+  .jam-clock { font-size: 0.72em; color: #666; margin-top: 2px; font-weight: 500; }
+  .jam-divider { width: 1px; align-self: stretch; background: #e0e0e0; margin: 0 4px 0 0; }
+  
+  .jam-content { flex: 1; min-width: 0; }
+  .jam-title { font-size: 0.95em; font-weight: 600; color: #222; margin-bottom: 3px; word-wrap: break-word; }
+  .jam-card.khusus .jam-title { color: #1e7e34; }
+  .jam-card.coding .jam-title { color: #5a32a3; }
+  .jam-card.istirahat .jam-title { color: #b8860b; font-style: italic; }
+  .jam-card.sholat .jam-title { color: #0c7a8f; font-weight: 700; }
+  .jam-card.kosong .jam-title { color: #999; font-style: italic; font-weight: 500; }
+  
+  .jam-sub { font-size: 0.78em; color: #666; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.85em; font-weight: 600; }
+  .badge-kelas { background: #2a5298; color: #fff; }
+  .badge-mapel { background: #e7f3ff; color: #2a5298; }
+  .badge-khusus { background: #d4edda; color: #155724; }
+  .badge-coding { background: #e9d8fd; color: #5a32a3; }
+  .badge-sholat { background: #d1ecf1; color: #0c5460; }
+  
+  .legend {
+    background: #fff; margin: 0 10px 10px; padding: 12px 14px; border-radius: 12px;
+    font-size: 0.75em; color: #666; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .legend-title { font-weight: 700; color: #333; margin-bottom: 8px; font-size: 0.9em; }
+  .legend-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  
+  .footnote {
+    background: #fff8e1; margin: 0 10px 20px; padding: 10px 14px; border-radius: 12px;
+    font-size: 0.78em; color: #6d4c00; border-left: 4px solid #ffc107;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); line-height: 1.4;
+  }
+  .footnote strong { color: #5a32a3; }
+  
+  footer { text-align: center; padding: 15px; color: #fff; font-size: 0.75em; opacity: 0.85; }
+  
+  @media (min-width: 600px) {
+    header h1 { font-size: 1.3em; } header p { font-size: 0.9em; }
+    .controls { flex-direction: row; top: 80px; }
+    .form-group { flex: 1; }
+    .schedule-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 20px; }
+    .jam-card.istirahat, .jam-card.sholat { grid-column: 1 / -1; }
+    .info-bar { flex-direction: row; flex-wrap: wrap; gap: 10px 20px; }
+    .back-btn { top: 16px; left: 16px; font-size: 14px; padding: 8px 18px; }
+  }
+  @media (min-width: 900px) { .app { max-width: 900px; } }
+  @media (max-width: 480px) {
+    .back-btn { top: 8px; left: 8px; padding: 4px 10px; font-size: 11px; }
+    header { padding-top: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- TOMBOL KEMBALI KE BERANDA SIGULAS -->
+  <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+
+  <header>
+    <h1>📚 JADWAL PELAJARAN SMPN 17 SURABAYA</h1>
+    <p>Tahun Ajaran 2026 - 2027 | Versi Kokurikuler</p>
+  </header>
+
+  <div class="controls">
+    <div class="form-group">
+      <label for="guru">👨‍🏫 Nama Guru</label>
+      <select id="guru"></select>
+    </div>
+    <div class="form-group">
+      <label for="hari">📅 Hari</label>
+      <select id="hari">
+        <option value="SENIN">Senin</option>
+        <option value="SELASA">Selasa</option>
+        <option value="RABU">Rabu</option>
+        <option value="KAMIS">Kamis</option>
+        <option value="JUMAT">Jumat</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="info-bar" id="infoBar"></div>
+  <div class="schedule-list" id="scheduleList"></div>
+
+  <div class="legend">
+    <div class="legend-title">Keterangan Warna</div>
+    <div class="legend-items">
+      <div class="legend-item"><span class="legend-dot" style="background:#28a745"></span>Pembiassaan/Kegiatan</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#6f42c1"></span>Coding/TKA*</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#ffc107"></span>Istirahat</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#17a2b8"></span>Sholat Jumat</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#2a5298"></span>Mengajar</div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>📌 Catatan Penting:</strong><br>
+    • <strong>Senin Jam IX:</strong> Coding/TKA* mengikuti jadwal terlampir.<br>
+  </div>
+
+  <footer>© 2026 Tim IT SMP Negeri 17 Surabaya</footer>
+</div>
+
+<script>
+// Data guru disinkronisasi 100% dengan file Excel
+// Senin-Kamis: 11 slot [I, II, III, IV, ISTIRAHAT1, V, VI, VII, ISTIRAHAT2, VIII, IX]
+// Jumat: 8 slot [I, II, III, ISTIRAHAT, IV, V, VI, VII]
+
+const jumatPola = ["SENAM", "ADIWIYATA", "JUMAT TAQWA", "ISTIRAHAT", "KOKURIKULER", "KOKURIKULER", "KOKURIKULER", "SHOLAT JUMAT"];
+
+const dataGuru = {
+  "Budi Setyawan, S.Pd., M.M.": { mapel: "Kepala Sekolah", SENIN: ["UPACARA","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], SELASA: ["","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], RABU: ["","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], KAMIS: ["","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], JUMAT: ["","","","ISTIRAHAT","","","",""] },
+  "Masruroh, S.Pd.I": { mapel: "PAI", SENIN: ["UPACARA","","","7I","ISTIRAHAT","7I","","7A","ISTIRAHAT","7A","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","","7C","7C","ISTIRAHAT","7H","7H"], RABU: ["PMA","7G","7G","","ISTIRAHAT","","7F","7F","ISTIRAHAT","7E","7E"], KAMIS: ["DHUHA","7J","7J","7B","ISTIRAHAT","7B","","","ISTIRAHAT","7D","7D"], JUMAT: [...jumatPola] },
+  "Nur Wahid Asnawi, S.Pd.": { mapel: "PAI", SENIN: ["UPACARA","8H","8H","","ISTIRAHAT","8I","8I","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","","8J","8J","ISTIRAHAT","8F","8F"], RABU: ["PMA","8C","8C","8D","ISTIRAHAT","8D","8G","ISTIRAHAT","8G","8E","8E"], KAMIS: ["DHUHA","8A","8A","","ISTIRAHAT","","8B","8B","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Mahmud Nurjihadin, S.Pd.I., M.A.": { mapel: "PAI", SENIN: ["UPACARA","","","9J","ISTIRAHAT","9J","","","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","","9I","9I","ISTIRAHAT","9D","9D"], RABU: ["PMA","","","9B","ISTIRAHAT","9B","9E","9E","ISTIRAHAT","",""], KAMIS: ["DHUHA","9G","9G","9F","ISTIRAHAT","9F","","ISTIRAHAT","9C","9C",""], JUMAT: [...jumatPola] },
+  "Monik Endah Kurniawati, S.Pd.": { mapel: "PKN", SENIN: ["UPACARA","7D","7D","8D","ISTIRAHAT","8D","","8F","ISTIRAHAT","8F","CODING/TKA*"], SELASA: ["LITERASI","8C","8C","8B","ISTIRAHAT","8B","","","ISTIRAHAT","7C","7C"], RABU: ["PMA","","","8A","ISTIRAHAT","8A","7A","7A","ISTIRAHAT","8E","8E"], KAMIS: ["DHUHA","7B","7B","","ISTIRAHAT","","7F","7F","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Nalurita Pratiwi, S.Pd.": { mapel: "PKN", SENIN: ["UPACARA","9C","9C","8J","ISTIRAHAT","8J","","9I","ISTIRAHAT","9I","CODING/TKA*"], SELASA: ["LITERASI","","","8I","ISTIRAHAT","8I","9A","9A","ISTIRAHAT","9J","9J"], RABU: ["PMA","9H","9H","","ISTIRAHAT","","9B","9B","ISTIRAHAT","9E","9E"], KAMIS: ["DHUHA","9G","9G","","ISTIRAHAT","","9F","9F","ISTIRAHAT","9D","9D"], JUMAT: [...jumatPola] },
+  "Ainun Jariyah, S.Pd.": { mapel: "Bhs INDONESIA", SENIN: ["UPACARA","7B","7B","7B","ISTIRAHAT","","7D","7D","ISTIRAHAT","7D","CODING/TKA*"], SELASA: ["LITERASI","7E","7E","7E","ISTIRAHAT","","7D","7D","ISTIRAHAT","7A","7A"], RABU: ["PMA","7E","7E","7C","ISTIRAHAT","7C","","7J","ISTIRAHAT","7J","7J"], KAMIS: ["DHUHA","7A","7A","7A","ISTIRAHAT","7C","7C","7C","ISTIRAHAT","7B","7B"], JUMAT: [...jumatPola] },
+  "Marendra Setia Nugraha, M.Pd.": { mapel: "Bhs INDONESIA", SENIN: ["UPACARA","8A","8A","8A","ISTIRAHAT","","7G","7G","ISTIRAHAT","7G","CODING/TKA*"], SELASA: ["LITERASI","7G","7G","7F","ISTIRAHAT","7F","7F","7I","ISTIRAHAT","7I","7I"], RABU: ["PMA","8A","8A","7J","ISTIRAHAT","7J","7J","7H","ISTIRAHAT","7H","7H"], KAMIS: ["DHUHA","7F","7F","7H","ISTIRAHAT","7H","7I","7I","ISTIRAHAT","7J","7J"], JUMAT: [...jumatPola] },
+  "Dewi Purnama Sari, S.Pd.": { mapel: "Bhs INDONESIA", SENIN: ["UPACARA","8F","8F","8F","ISTIRAHAT","","8D","8D","ISTIRAHAT","8D","CODING/TKA*"], SELASA: ["LITERASI","8E","8E","8E","ISTIRAHAT","","8B","8B","ISTIRAHAT","8F","8F"], RABU: ["PMA","8E","8E","","ISTIRAHAT","8B","8B","8B","ISTIRAHAT","8C","8C"], KAMIS: ["DHUHA","7C(BIG)","7C(BIG)","7C(BIG)","ISTIRAHAT","8C","8C","8C","ISTIRAHAT","8D","8D"], JUMAT: [...jumatPola] },
+  "Ayu Sulala, S.Pd.": { mapel: "Bhs INDONESIA", SENIN: ["UPACARA","8I","8I","8I","ISTIRAHAT","","8H","8H","ISTIRAHAT","8H","CODING/TKA*"], SELASA: ["LITERASI","8G","8G","8G","ISTIRAHAT","","8H","8H","ISTIRAHAT","7J(PKN)","7J(PKN)"], RABU: ["PMA","8I","8I","8J","ISTIRAHAT","8J","","9A","ISTIRAHAT","9A","9A"], KAMIS: ["DHUHA","9A","9A","8G","ISTIRAHAT","8G","","8J","ISTIRAHAT","8J","8J"], JUMAT: [...jumatPola] },
+  "Betty Agustiningtiyas, S.Pd.": { mapel: "Bhs INDONESIA", SENIN: ["UPACARA","9E","9E","9E","ISTIRAHAT","","9D","9D","ISTIRAHAT","9D","CODING/TKA*"], SELASA: ["LITERASI","7I(PKN)","7I(PKN)","9B","ISTIRAHAT","9B","9F","9F","ISTIRAHAT","9D","9D"], RABU: ["PMA","9E","9E","9C","ISTIRAHAT","9C","","9F","ISTIRAHAT","9F","9F"], KAMIS: ["DHUHA","9C","9C","9C","ISTIRAHAT","","9B","9B","ISTIRAHAT","9B",""], JUMAT: [...jumatPola] },
+  "Indah Ariani, S.Pd.": { mapel: "Bhs INDONESIA", SENIN: ["UPACARA","9I","9I","9I","ISTIRAHAT","","9J","9J","ISTIRAHAT","9J","CODING/TKA*"], SELASA: ["LITERASI","9H","9H","","ISTIRAHAT","","9G","9G","ISTIRAHAT","9G",""], RABU: ["PMA","8B(BIG)","8B(BIG)","8B(BIG)","ISTIRAHAT","","9I","9I","ISTIRAHAT","9J","9J"], KAMIS: ["DHUHA","8A(BIG)","8A(BIG)","8A(BIG)","ISTIRAHAT","9H","9H","9H","ISTIRAHAT","9G","9G"], JUMAT: [...jumatPola] },
+  "Imam Safawi, S.Si.": { mapel: "MATEMATIKA", SENIN: ["UPACARA","7C","7C","7D","ISTIRAHAT","7D","7H(BIG)","7H(BIG)","ISTIRAHAT","7H(BIG)","CODING/TKA*"], SELASA: ["LITERASI","7C","7C","7B","ISTIRAHAT","7B","","","ISTIRAHAT","7E","7E"], RABU: ["PMA","","","7A","ISTIRAHAT","7A","7E","7E","ISTIRAHAT","7B","7B"], KAMIS: ["DHUHA","7D","7D","","ISTIRAHAT","7A","7A","7G(BIG)","ISTIRAHAT","7G(BIG)","7G(BIG)"], JUMAT: [...jumatPola] },
+  "Anggit Dwi Kuncoro, S.Pd.": { mapel: "MATEMATIKA", SENIN: ["UPACARA","7H","7H","7A(BIG)","ISTIRAHAT","7A(BIG)","7A(BIG)","7F","ISTIRAHAT","7F","CODING/TKA*"], SELASA: ["LITERASI","7F","7F","","ISTIRAHAT","","7J","7J","ISTIRAHAT","7G","7G"], RABU: ["PMA","7B(BIG)","7B(BIG)","7B(BIG)","ISTIRAHAT","","7I","7I","ISTIRAHAT","7G","7G"], KAMIS: ["DHUHA","7H","7H","7J","ISTIRAHAT","7J","","","ISTIRAHAT","7I","7I"], JUMAT: [...jumatPola] },
+  "Alfia Rachmawati, S.Pd.": { mapel: "MATEMATIKA", SENIN: ["UPACARA","8E","8E","","ISTIRAHAT","8B","8B","8A","ISTIRAHAT","8A","CODING/TKA*"], SELASA: ["LITERASI","7H(PKN)","7H(PKN)","8D","ISTIRAHAT","8D","7G(PKN)","7G(PKN)","ISTIRAHAT","8A","8A"], RABU: ["PMA","8C","8C","","ISTIRAHAT","","","","ISTIRAHAT","",""], KAMIS: ["DHUHA","8B","8B","8D","ISTIRAHAT","8D","8E","8E","ISTIRAHAT","8C","8C"], JUMAT: [...jumatPola] },
+  "Drs. Sunarto": { mapel: "MATEMATIKA", SENIN: ["UPACARA","","","","ISTIRAHAT","8F","8F","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","8I","8I","8F","ISTIRAHAT","8F","8J","8J","ISTIRAHAT","8H","8H"], RABU: ["PMA","8G","8G","8H","ISTIRAHAT","8H","8J","8J","ISTIRAHAT","",""], KAMIS: ["DHUHA","","","","ISTIRAHAT","8I","8I","","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Wiwien Asmaul Khusnah, S.Pd.": { mapel: "MATEMATIKA", SENIN: ["UPACARA","","9A","9A","ISTIRAHAT","9E","9E","9B","ISTIRAHAT","9B","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","8E(SBD)","8E(SBD)","","ISTIRAHAT","9C","9C"], RABU: ["PMA","9D","9D","","ISTIRAHAT","","9C","9C","ISTIRAHAT","9B","9B"], KAMIS: ["DHUHA","8D(SBD)","8D(SBD)","9A","ISTIRAHAT","9A","9D","9D","ISTIRAHAT","9E","9E"], JUMAT: [...jumatPola] },
+  "Suci Lestari, S.Pd.": { mapel: "MATEMATIKA", SENIN: ["UPACARA","9J","9J","9F","ISTIRAHAT","9F","8G(PKN)","8G(PKN)","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","","","9G","ISTIRAHAT","9G","9H","9H","ISTIRAHAT","9I","9I"], RABU: ["PMA","9F","9F","","ISTIRAHAT","","8H(PKN)","8H(PKN)","ISTIRAHAT","9I","9I"], KAMIS: ["DHUHA","9J","9J","9G","ISTIRAHAT","9G","","","ISTIRAHAT","9H","9H"], JUMAT: [...jumatPola] },
+  "Zubaidah, S.Pd.": { mapel: "IPA", SENIN: ["UPACARA","","","","ISTIRAHAT","7E","7E","7B","ISTIRAHAT","7B","CODING/TKA*"], SELASA: ["LITERASI","9F(PKY)","9F(PKY)","","ISTIRAHAT","","7B","7B","ISTIRAHAT","",""], RABU: ["PMA","7F","7F","9E(PKY)","ISTIRAHAT","9E(PKY)","7C","7C","ISTIRAHAT","7D","7D"], KAMIS: ["DHUHA","7E","7E","7F","ISTIRAHAT","7F","7D","7D","ISTIRAHAT","7C","7C"], JUMAT: [...jumatPola] },
+  "Evyna Untari, S.Pd.": { mapel: "IPA", SENIN: ["UPACARA","7G","7G","","ISTIRAHAT","8A","8A","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","","","7G","ISTIRAHAT","7G","8A","8A","ISTIRAHAT","8B","8B"], RABU: ["PMA","7H","7H","","ISTIRAHAT","7D(BIG)","7D(BIG)","7D(BIG)","ISTIRAHAT","7I","7I"], KAMIS: ["DHUHA","7I","7I","8B","ISTIRAHAT","8B","7H","7H","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Achiyati Puji Lestari, S.Pd.": { mapel: "IPA", SENIN: ["UPACARA","8G","8G","8E","ISTIRAHAT","8E","","9H(PKY)","ISTIRAHAT","9H(PKY)","CODING/TKA*"], SELASA: ["LITERASI","9I(PKY)","9I(PKY)","8H","ISTIRAHAT","8H","8C","8C","ISTIRAHAT","8D","8D"], RABU: ["PMA","","","8C","ISTIRAHAT","8C","9G(PKY)","9G(PKY)","ISTIRAHAT","8H","8H"], KAMIS: ["DHUHA","8G","8G","8E","ISTIRAHAT","8E","8D","8D","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Drs. Eko Sugiarto": { mapel: "IPA", SENIN: ["UPACARA","9D","9D","","ISTIRAHAT","9A","9A","8I","ISTIRAHAT","8I","CODING/TKA*"], SELASA: ["LITERASI","9D","9D","9C","ISTIRAHAT","9C","8I","8I","ISTIRAHAT","",""], RABU: ["PMA","9C","9C","","ISTIRAHAT","","8C(SBD)","8C(SBD)","ISTIRAHAT","8J","8J"], KAMIS: ["DHUHA","","","8J","ISTIRAHAT","8J","9A","9A","ISTIRAHAT","8B(SBD)","8B(SBD)"], JUMAT: [...jumatPola] },
+  "Nur Lailiya, S.Pd.": { mapel: "IPA", SENIN: ["UPACARA","9F","9F","","ISTIRAHAT","9I","9I","9G","ISTIRAHAT","9G","CODING/TKA*"], SELASA: ["LITERASI","9G","9G","9H","ISTIRAHAT","9H","9I","9I","ISTIRAHAT","9E","9E"], RABU: ["PMA","","","9J(PKY)","ISTIRAHAT","9J(PKY)","","","ISTIRAHAT","9H","9H"], KAMIS: ["DHUHA","9E","9E","","ISTIRAHAT","","","","ISTIRAHAT","9F","9F"], JUMAT: [...jumatPola] },
+  "Putri Enizs Wahyu Rukmana, S.Pd.": { mapel: "IPA", SENIN: ["UPACARA","7A","7A","","ISTIRAHAT","","","7J","ISTIRAHAT","7J","CODING/TKA*"], SELASA: ["LITERASI","7J","7J","7A","ISTIRAHAT","7A","","","ISTIRAHAT","9B","9B"], RABU: ["PMA","8F","8F","","ISTIRAHAT","","9J","9J","ISTIRAHAT","",""], KAMIS: ["DHUHA","9B","9B","","ISTIRAHAT","","9J","9J","ISTIRAHAT","8F","8F"], JUMAT: [...jumatPola] },
+  "Sulastri, S.E.": { mapel: "IPS", SENIN: ["UPACARA","9B","9B","9B","ISTIRAHAT","","8J","8J","ISTIRAHAT","8J","CODING/TKA*"], SELASA: ["LITERASI","","","7I(BIG)","ISTIRAHAT","7I(BIG)","7I(BIG)","8G","ISTIRAHAT","8G","8G"], RABU: ["PMA","","","9A","ISTIRAHAT","9A","9A","8I","ISTIRAHAT","8I","8I"], KAMIS: ["DHUHA","","","8H","ISTIRAHAT","8H","8H","9C","ISTIRAHAT","9C","9C"], JUMAT: [...jumatPola] },
+  "Yayuk Islachati, S.Pd.": { mapel: "IPS", SENIN: ["UPACARA","9G","9G","9G","ISTIRAHAT","","9F","9F","ISTIRAHAT","9F","CODING/TKA*"], SELASA: ["LITERASI","9E","9E","9E","ISTIRAHAT","9J","9J","9J","ISTIRAHAT","",""], RABU: ["PMA","","","9D","ISTIRAHAT","9D","9D","","ISTIRAHAT","",""], KAMIS: ["DHUHA","9H","9H","9H","ISTIRAHAT","9I","9I","9I","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Heni Wijayanti, S.Pd.": { mapel: "B INGGRIS", SENIN: ["UPACARA","9A","","8C","ISTIRAHAT","8C","8C","","ISTIRAHAT","8G","CODING/TKA*"], SELASA: ["LITERASI","8J","8J","","ISTIRAHAT","8G","8G","8E","ISTIRAHAT","8E","8E"], RABU: ["PMA","9A","9A","8I","ISTIRAHAT","8I","8I","8D","ISTIRAHAT","8D","8D"], KAMIS: ["DHUHA","8F","8F","8F","ISTIRAHAT","","8J","8H","ISTIRAHAT","8H","8H"], JUMAT: [...jumatPola] },
+  "Hero Witjaksono, S.Pd.": { mapel: "B INGGRIS", SENIN: ["UPACARA","9H","9H","9H","ISTIRAHAT","","9C","9C","ISTIRAHAT","9C","CODING/TKA*"], SELASA: ["LITERASI","9J","9J","9J","ISTIRAHAT","9E","9E","9E","ISTIRAHAT","","9G"], RABU: ["PMA","9B","9B","9F","ISTIRAHAT","9F","9F","9D","ISTIRAHAT","9D","9D"], KAMIS: ["DHUHA","9I","9I","9I","ISTIRAHAT","","9G","9G","ISTIRAHAT","","9B"], JUMAT: [...jumatPola] },
+  "Agus Nur Budi Waluyo, S.Pd.": { mapel: "PJOK", SENIN: ["UPACARA","8CD","8CD","8GH","ISTIRAHAT","8GH","","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","8AB","8AB","7J(SBD)","ISTIRAHAT","7J(SBD)","7J(SBD)","","ISTIRAHAT","",""], RABU: ["PMA","","","8EF","ISTIRAHAT","8EF","","","ISTIRAHAT","",""], KAMIS: ["DHUHA","8IJ","8IJ","7I(SBD)","ISTIRAHAT","7I(SBD)","7I(SBD)","","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Rizki Febrianto, S.Pd.": { mapel: "PJOK", SENIN: ["UPACARA","","","9CD","ISTIRAHAT","9CD","","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","9AB","9AB","8A(SBD)","ISTIRAHAT","8A(SBD)","","","ISTIRAHAT","",""], RABU: ["PMA","9IJ","9IJ","9GH","ISTIRAHAT","9GH","","","ISTIRAHAT","",""], KAMIS: ["DHUHA","","","9EF","ISTIRAHAT","9EF","","","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Millenia Tri Budhi Haryanto, S.Pd.": { mapel: "INFORMATIKA", SENIN: ["UPACARA","7F","7F","","ISTIRAHAT","7B","7B","7E","ISTIRAHAT","7E","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","7E(BIG)","7E(BIG)","7E(BIG)","ISTIRAHAT","",""], RABU: ["PMA","7A","7A","7I","ISTIRAHAT","7I","7G","7G","ISTIRAHAT","7C","7C"], KAMIS: ["DHUHA","","","7D","ISTIRAHAT","7D","7J","7J","ISTIRAHAT","7H","7H"], JUMAT: [...jumatPola] },
+  "Tania Lutfi, S.Pd.": { mapel: "INFORMATIKA", SENIN: ["UPACARA","","","7F(BIG)","ISTIRAHAT","7F(BIG)","7F(BIG)","8B","ISTIRAHAT","8B","CODING/TKA*"], SELASA: ["LITERASI","8H","8H","8C","ISTIRAHAT","8C","8D","8D","ISTIRAHAT","8I","8I"], RABU: ["PMA","8J","8J","","ISTIRAHAT","","8G","8G","ISTIRAHAT","8F","8F"], KAMIS: ["DHUHA","","","","ISTIRAHAT","8A","8A","","ISTIRAHAT","8E","8E"], JUMAT: [...jumatPola] },
+  "Ma Arif Setiawan, S.Pd.": { mapel: "INFORMATIKA", SENIN: ["UPACARA","","","","ISTIRAHAT","9H","9H","9A","ISTIRAHAT","9A","CODING/TKA*"], SELASA: ["LITERASI","9C","9C","9D","ISTIRAHAT","9D","9B","9B","ISTIRAHAT","9F","9F"], RABU: ["PMA","9G","9G","","ISTIRAHAT","","","","ISTIRAHAT","7A","7A"], KAMIS: ["DHUHA","","","9J","ISTIRAHAT","9J","9E","9E","ISTIRAHAT","9I","9I"], JUMAT: [...jumatPola] },
+  "Rika Arhandita Luckyanti, S.Pd.": { mapel: "SBDPKY", SENIN: ["UPACARA","","","","ISTIRAHAT","9B","9B","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","","","9A","ISTIRAHAT","9A","","","ISTIRAHAT","8J","8J"], RABU: ["PMA","","","","ISTIRAHAT","","8F","8F","ISTIRAHAT","9C","9C"], KAMIS: ["DHUHA","8H","8H","9D","ISTIRAHAT","9D","8G","8G","ISTIRAHAT","8I","8I"], JUMAT: [...jumatPola] },
+  "Risky Dwi Andrianingtyas, S.Pd., M.A.": { mapel: "BD", SENIN: ["UPACARA","7I","7I","","ISTIRAHAT","7J","7J","8C","ISTIRAHAT","8C","CODING/TKA*"], SELASA: ["LITERASI","8D","8D","7H","ISTIRAHAT","7H","7A","7A","ISTIRAHAT","7D","7D"], RABU: ["PMA","7C","7C","7G","ISTIRAHAT","7G","8A","8A","ISTIRAHAT","8B","8B"], KAMIS: ["DHUHA","8E","8E","7E","ISTIRAHAT","7E","7B","7B","ISTIRAHAT","7F","7F"], JUMAT: [...jumatPola] },
+  "Wahyu Sayogya Rani, S.Pd.": { mapel: "BD", SENIN: ["UPACARA","8J","8J","","ISTIRAHAT","9G","9G","9E","ISTIRAHAT","9E","CODING/TKA*"], SELASA: ["LITERASI","8F","8F","9F","ISTIRAHAT","9F","9C","9C","ISTIRAHAT","9A","9A"], RABU: ["PMA","8H","8H","9I","ISTIRAHAT","9I","9H","9H","ISTIRAHAT","8G","8G"], KAMIS: ["DHUHA","9D","9D","9B","ISTIRAHAT","9B","8I","8I","ISTIRAHAT","9J","9J"], JUMAT: [...jumatPola] },
+  "Feni Etika Rahmawati, S.Pd.": { mapel: "BK", SENIN: ["UPACARA","8B(IPS)","8B(IPS)","8B(IPS)","ISTIRAHAT","","8E","8E","ISTIRAHAT","8E","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], RABU: ["PMA","","","8D","ISTIRAHAT","8D","8D","","ISTIRAHAT","",""], KAMIS: ["DHUHA","8C","8C","8C","ISTIRAHAT","8F","8F","8F","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Thomas Advent Bimo Saputro, S.Pd.": { mapel: "BK", SENIN: ["UPACARA","","","7GH","ISTIRAHAT","7GH","","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","7AB","7AB","7CD","ISTIRAHAT","7CD","","","ISTIRAHAT","",""], RABU: ["PMA","7IJ","7IJ","7EF","ISTIRAHAT","7EF","","","ISTIRAHAT","",""], KAMIS: ["DHUHA","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], JUMAT: [...jumatPola] },
+  "Nurul Manazilatus Shoimah, S.Pd.": { mapel: "BK", SENIN: ["UPACARA","7J(IPS)","7J(IPS)","7J(IPS)","ISTIRAHAT","","7I(IPS)","7I(IPS)","ISTIRAHAT","7I(IPS)","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","","","","ISTIRAHAT","",""], RABU: ["PMA","","","7H(IPS)","ISTIRAHAT","7H(IPS)","7H(IPS)","","ISTIRAHAT","",""], KAMIS: ["DHUHA","","","7G(IPS)","ISTIRAHAT","7G(IPS)","7G(IPS)","8A(IPS)","ISTIRAHAT","8A(IPS)","8A(IPS)"], JUMAT: [...jumatPola] },
+  "Evi Nur Kholifah, S.Sos.I.": { mapel: "BK", SENIN: ["UPACARA","7E(IPS)","7E(IPS)","7E(IPS)","ISTIRAHAT","","7C(IPS)","7C(IPS)","ISTIRAHAT","7C(IPS)","CODING/TKA*"], SELASA: ["LITERASI","","","","ISTIRAHAT","","","7F(IPS)","ISTIRAHAT","7F(IPS)","7F(IPS)"], RABU: ["PMA","7D(IPS)","7D(IPS)","7D(IPS)","ISTIRAHAT","7B(IPS)","7B(IPS)","7B(IPS)","ISTIRAHAT","",""], KAMIS: ["DHUHA","","","","ISTIRAHAT","","","7A(IPS)","ISTIRAHAT","7A(IPS)","7A(IPS)"], JUMAT: [...jumatPola] },
+  "Ninda Rifqi Ani, S.Pd.": { mapel: "BK", SENIN: ["UPACARA","","","7C(SBD)","ISTIRAHAT","7C(SBD)","","","ISTIRAHAT","","CODING/TKA*"], SELASA: ["LITERASI","7D(SBD)","7D(SBD)","","ISTIRAHAT","","7H(SBD)","7H(SBD)","ISTIRAHAT","7B(SBD)","7B(SBD)"], RABU: ["PMA","","","","ISTIRAHAT","","","","ISTIRAHAT","7F(SBD)","7F(SBD)"], KAMIS: ["DHUHA","7G(SBD)","7G(SBD)","","ISTIRAHAT","","7E(SBD)","7E(SBD)","ISTIRAHAT","",""], JUMAT: [...jumatPola] }
+};
+
+const waktuSeninKamis = {
+  I: "06.30-07.30", II: "07.30-08.10", III: "08.10-08.50", IV: "08.50-09.30",
+  ISTIRAHAT1: "09.30-09.50", V: "09.50-10.30", VI: "10.30-11.10", VII: "11.10-11.50",
+  ISTIRAHAT2: "11.50-12.50", VIII: "12.50-13.30", IX: "13.30-14.10"
+};
+
+const waktuJumat = {
+  I: "06.30-07.00", II: "07.00-08.00", III: "08.00-09.00",
+  ISTIRAHAT: "09.00-09.30",
+  IV: "09.30-10.10", V: "10.10-10.50", VI: "10.50-11.30", VII: "11.30-13.00"
+};
+
+const strukturJam = {
+  SENIN: ["I","II","III","IV","ISTIRAHAT1","V","VI","VII","ISTIRAHAT2","VIII","IX"],
+  SELASA: ["I","II","III","IV","ISTIRAHAT1","V","VI","VII","ISTIRAHAT2","VIII","IX"],
+  RABU: ["I","II","III","IV","ISTIRAHAT1","V","VI","VII","ISTIRAHAT2","VIII","IX"],
+  KAMIS: ["I","II","III","IV","ISTIRAHAT1","V","VI","VII","ISTIRAHAT2","VIII","IX"],
+  JUMAT: ["I","II","III","ISTIRAHAT","IV","V","VI","VII"]
+};
+
+const kegiatanKhusus = { SENIN: "UPACARA", SELASA: "LITERASI", RABU: "PMA", KAMIS: "DHUHA", JUMAT: "SENAM" };
+const kegiatanKhususList = ["UPACARA","LITERASI","PMA","DHUHA","SENAM","ADIWIYATA","JUMAT TAQWA","KOKURIKULER"];
+
+const guruSelect = document.getElementById('guru');
+const hariSelect = document.getElementById('hari');
+const scheduleList = document.getElementById('scheduleList');
+const infoBar = document.getElementById('infoBar');
+
+Object.keys(dataGuru).sort().forEach(nama => {
+  const opt = document.createElement('option');
+  opt.value = nama; opt.textContent = nama;
+  guruSelect.appendChild(opt);
+});
+
+function isKegiatanKhusus(value) {
+  return kegiatanKhususList.includes(value);
+}
+
+function renderSchedule() {
+  const namaGuru = guruSelect.value;
+  const hari = hariSelect.value;
+  const guru = dataGuru[namaGuru];
+  if (!guru) return;
+  
+  infoBar.innerHTML = `
+    <div class="info-row"><span class="info-label">👨‍🏫 Guru</span><span class="info-value">${namaGuru}</span></div>
+    <div class="info-row"><span class="info-label">📖 Mapel</span><span class="info-value mapel">${guru.mapel}</span></div>
+    <div class="info-row"><span class="info-label">📅 Hari</span><span class="info-value">${hari.charAt(0) + hari.slice(1).toLowerCase()}</span></div>
+  `;
+  
+  const jadwalHari = guru[hari];
+  const struktur = strukturJam[hari];
+  const waktuRef = (hari === "JUMAT") ? waktuJumat : waktuSeninKamis;
+  
+  scheduleList.innerHTML = '';
+  
+  struktur.forEach((jamKey, idx) => {
+    const jamLabel = jamKey.replace("ISTIRAHAT1","ISTIRAHAT 1").replace("ISTIRAHAT2","ISTIRAHAT 2");
+    const waktu = waktuRef[jamKey] || "-";
+    let nilai = jadwalHari[idx] || "";
+    
+    if (jamKey === "I" && (nilai === "" || isKegiatanKhusus(nilai))) {
+      nilai = kegiatanKhusus[hari];
+    }
+    
+    const card = document.createElement('div');
+    card.className = 'jam-card';
+    
+    if (jamKey === "ISTIRAHAT" || jamKey === "ISTIRAHAT1" || jamKey === "ISTIRAHAT2") {
+      card.classList.add('istirahat');
+      card.innerHTML = `
+        <div class="jam-time"><div class="jam-label">🍽️ Istirahat</div><div class="jam-clock">${waktu}</div></div>
+        <div class="jam-divider"></div>
+        <div class="jam-content">
+          <div class="jam-title">Istirahat</div>
+          <div class="jam-sub">Waktu istirahat${hari==="JUMAT" ? " & persiapan" : ""}</div>
+        </div>`;
+    }
+    else if (nilai === "SHOLAT JUMAT" || (hari === "JUMAT" && jamKey === "VII")) {
+      card.classList.add('sholat');
+      card.innerHTML = `
+        <div class="jam-time"><div class="jam-label">🕌 Jam ${jamKey}</div><div class="jam-clock">${waktu}</div></div>
+        <div class="jam-divider"></div>
+        <div class="jam-content">
+          <div class="jam-title">Sholat Jumat</div>
+          <div class="jam-sub"><span class="badge badge-sholat">Ibadah & Pulang</span></div>
+        </div>`;
+    }
+    else if (nilai === "CODING/TKA*") {
+      card.classList.add('coding');
+      card.innerHTML = `
+        <div class="jam-time"><div class="jam-label">Jam ${jamLabel}</div><div class="jam-clock">${waktu}</div></div>
+        <div class="jam-divider"></div>
+        <div class="jam-content">
+          <div class="jam-title">💻 Coding / TKA*</div>
+          <div class="jam-sub"><span class="badge badge-coding">Kegiatan Wajib</span></div>
+        </div>`;
+    }
+    else if (isKegiatanKhusus(nilai)) {
+      card.classList.add('khusus');
+      card.innerHTML = `
+        <div class="jam-time"><div class="jam-label">Jam ${jamLabel}</div><div class="jam-clock">${waktu}</div></div>
+        <div class="jam-divider"></div>
+        <div class="jam-content">
+          <div class="jam-title">${nilai}</div>
+          <div class="jam-sub"><span class="badge badge-khusus">Pembiassaan/Kegiatan</span></div>
+        </div>`;
+    }
+    else if (!nilai || nilai === "") {
+      card.classList.add('kosong');
+      card.innerHTML = `
+        <div class="jam-time"><div class="jam-label">Jam ${jamLabel}</div><div class="jam-clock">${waktu}</div></div>
+        <div class="jam-divider"></div>
+        <div class="jam-content">
+          <div class="jam-title">Kosong / Bebas</div>
+          <div class="jam-sub">Tidak ada jadwal mengajar</div>
+        </div>`;
+    }
+    else {
+      const match = nilai.match(/^(\d+\w*)\(([^)]+)\)$/);
+      let kelas = "", keterangan = "";
+      if (match) { kelas = match[1]; keterangan = match[2]; }
+      else { kelas = nilai; }
+      
+      let subContent = `<span class="badge badge-kelas">Kelas ${kelas}</span>`;
+      if (keterangan) subContent += ` <span class="badge badge-mapel">${keterangan}</span>`;
+      
+      card.innerHTML = `
+        <div class="jam-time"><div class="jam-label">Jam ${jamLabel}</div><div class="jam-clock">${waktu}</div></div>
+        <div class="jam-divider"></div>
+        <div class="jam-content">
+          <div class="jam-title">Mengajar Kelas ${kelas}</div>
+          <div class="jam-sub">${subContent}</div>
+        </div>`;
+    }
+    scheduleList.appendChild(card);
+  });
+}
+
+guruSelect.addEventListener('change', renderSchedule);
+hariSelect.addEventListener('change', renderSchedule);
+
+const hariSekarang = new Date().getDay();
+const mapHari = {1:"SENIN", 2:"SELASA", 3:"RABU", 4:"KAMIS", 5:"JUMAT"};
+if (mapHari[hariSekarang]) hariSelect.value = mapHari[hariSekarang];
+
+renderSchedule();
+</script>
+</body>
+</html>

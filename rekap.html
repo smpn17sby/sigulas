@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Absensi • SIGULAS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f0f3f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.10);
+            position: relative;
+        }
+
+        /* Tombol Kembali */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef2f7;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #1e3a6f;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .back-btn:hover {
+            background: #dce3ed;
+            transform: scale(1.02);
+        }
+        .back-btn:active {
+            transform: scale(0.96);
+        }
+
+        .page-icon {
+            font-size: 60px;
+            display: block;
+            text-align: center;
+            margin: 30px 0 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e3a6f;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #5a6f8a;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* Grid submenu – 3 kolom */
+        .submenu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .submenu-item {
+            background: #f8faff;
+            border: 2px solid #eef2f7;
+            border-radius: 16px;
+            padding: 24px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: #1e3a6f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .submenu-item:hover {
+            transform: translateY(-4px);
+            border-color: #1e3a6f;
+            background: #f0f4ff;
+            box-shadow: 0 6px 16px rgba(30, 58, 111, 0.12);
+        }
+        .submenu-item:active {
+            transform: scale(0.96);
+        }
+        .submenu-item .sub-icon {
+            font-size: 32px;
+        }
+        .submenu-item .sub-label {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .submenu-item .sub-desc {
+            font-size: 11px;
+            color: #7a8ea8;
+            line-height: 1.3;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .submenu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            /* Item ketiga (Bulanan & Semester) memenuhi 2 kolom */
+            .submenu-item:last-child {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 16px;
+            }
+            .back-btn {
+                position: static;
+                margin-bottom: 16px;
+                display: inline-flex;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .page-icon {
+                font-size: 48px;
+                margin-top: 10px;
+            }
+            .submenu-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .submenu-item:last-child {
+                grid-column: span 1;
+            }
+            .submenu-item {
+                padding: 18px 10px;
+            }
+            .submenu-item .sub-icon {
+                font-size: 26px;
+            }
+            .submenu-item .sub-label {
+                font-size: 13px;
+            }
+            .submenu-item .sub-desc {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tombol Kembali ke Beranda SIGULAS -->
+        <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+
+        <span class="page-icon">📊</span>
+        <h1>Rekap Absensi</h1>
+        <p class="sub">Pilih jenis rekap yang ingin Anda lihat atau unduh.</p>
+
+        <div class="submenu-grid">
+            <!-- 1. Rekap Harian Kelas -->
+            <a href="#" target="_blank" rel="noopener" class="submenu-item" id="submenu-harian-kelas">
+                <span class="sub-icon">📋</span>
+                <span class="sub-label">Rekap Harian Kelas</span>
+                <span class="sub-desc">Per kelas per hari</span>
+            </a>
+
+            <!-- 2. Rekap Harian Sekolah -->
+            <a href="#" target="_blank" rel="noopener" class="submenu-item" id="submenu-harian-sekolah">
+                <span class="sub-icon">🏫</span>
+                <span class="sub-label">Rekap Harian Sekolah</span>
+                <span class="sub-desc">Semua kelas dalam satu hari</span>
+            </a>
+
+            <!-- 3. Rekap Bulanan & Semester (digabung) -->
+            <a href="#" target="_blank" rel="noopener" class="submenu-item" id="submenu-bulanan-semester">
+                <span class="sub-icon">📆</span>
+                <span class="sub-label">Rekap Bulanan &amp; Semester</span>
+                <span class="sub-desc">Bulanan dan semester ganjil/genap</span>
+            </a>
+        </div>
+
+        <p style="text-align:center; margin-top:24px; font-size:12px; color:#a0b2c9;">
+            Klik submenu untuk membuka tautan rekap di tab baru.
+        </p>
+    </div>
+
+    <script>
+        // ============================================================
+        //  GANTI LINK DI BAWAH INI DENGAN URL ASLI MASING-MASING REKAP
+        // ============================================================
+        const LINKS = {
+            'harian-kelas': 'https://script.google.com/macros/s/AKfycbz5GQyzlJ_fm7LSK_lLINdihdKg-n-Z0CSHyrGHmSc8ncA4inlri7pJy4lHnEwpPZJ7/exec',
+            'harian-sekolah': 'https://script.google.com/macros/s/AKfycbxGHf_QUqvr8-0pJaGrf1-jbpS3luzBmrpGz9psm4Ie2vY-_gWiCkpzqOJ0_DgoQGzKiQ/exec',
+            'bulanan-semester': 'https://script.google.com/macros/s/AKfycbz6d9asTgyuUJFjppw0Fh6ltJDGxCU2lQhuuraJ3pbhmhDzx7NIneEzop405jaLZQK1sg/exec'
+        };
+
+        // Set href untuk setiap submenu
+        document.getElementById('submenu-harian-kelas').href = LINKS['harian-kelas'];
+        document.getElementById('submenu-harian-sekolah').href = LINKS['harian-sekolah'];
+        document.getElementById('submenu-bulanan-semester').href = LINKS['bulanan-semester'];
+
+        // Jika link masih placeholder, beri notifikasi saat diklik
+        document.querySelectorAll('.submenu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href.includes('placeholder')) {
+                    e.preventDefault();
+                    alert('🔗 Link rekap belum diatur. Silakan ganti placeholder dengan URL asli di file rekap.html.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

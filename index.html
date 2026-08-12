@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SIGULAS • Sistem Informasi Guru</title>
+
+    <!-- PWA META TAGS -->
+    <meta name="theme-color" content="#1e4070">
+    <meta name="description" content="Sistem Informasi Guru SMP Negeri 17 Surabaya">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SIGULAS">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="SIGULAS">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f0f3f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px 18px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            min-height: 90vh;
+            position: relative;
+        }
+
+        /* HEADER */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0 16px;
+            border-bottom: 2px solid #eef2f7;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .app-title-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+        .app-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e3a6f;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .app-subtitle {
+            font-size: 12px;
+            color: #7a8ea8;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn-refresh {
+            background: #eef2f7;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-refresh:hover {
+            background: #dce3ed;
+        }
+
+        /* HERO CARD */
+        .hero-card {
+            background: linear-gradient(145deg, #1e3a6f, #16315a);
+            border-radius: 24px;
+            padding: 20px 18px;
+            margin: 18px 0 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 20px -6px rgba(30, 58, 111, 0.3);
+        }
+        .hero-card .time-badge {
+            font-size: 32px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 6px 20px;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        .hero-card .hero-sub {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 4px;
+            opacity: 0.95;
+        }
+        .hero-card .hero-sub2 {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        /* MENU GRID */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 16px 0 10px;
+        }
+        .menu-grid-item {
+            border-radius: 16px;
+            padding: 18px 8px 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-height: 115px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            background: #1976d2; /* fallback */
+        }
+        .menu-grid-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+        .menu-grid-item:active {
+            transform: scale(0.96);
+        }
+        .menu-grid-item .icon-wrapper {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: transform 0.2s;
+            backdrop-filter: blur(4px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .menu-grid-item:hover .icon-wrapper {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .menu-grid-item .label {
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.3;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.2px;
+            color: white;
+        }
+
+        /* Warna menu */
+        .card-color-0 { background: linear-gradient(135deg, #1976d2, #1565c0); }
+        .card-color-1 { background: linear-gradient(135deg, #f57c00, #e65100); }
+        .card-color-2 { background: linear-gradient(135deg, #388e3c, #2e7d32); }
+        .card-color-3 { background: linear-gradient(135deg, #7b1fa2, #6a1b9a); }
+        .card-color-4 { background: linear-gradient(135deg, #c2185b, #ad1457); }
+        .card-color-5 { background: linear-gradient(135deg, #0097a7, #00838f); }
+        .card-color-6 { background: linear-gradient(135deg, #fbc02d, #f9a825); color: #3e2723; }
+        .card-color-6 .label { color: #3e2723; }
+        .card-color-6 .icon-wrapper { background: rgba(62, 39, 35, 0.15); border-color: rgba(62, 39, 35, 0.25); }
+        .card-color-7 { background: linear-gradient(135deg, #d32f2f, #c62828); }
+
+        /* CONTENT WRAPPER */
+        .content-wrapper {
+            display: none;
+            background: #f8faff;
+            border-radius: 20px;
+            padding: 20px 18px;
+            margin: 16px 0 10px;
+            border: 1px solid #eef2f7;
+            text-align: center;
+        }
+        .content-wrapper.active {
+            display: block;
+        }
+        .content-wrapper .back-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #eef2f7;
+        }
+        .content-wrapper .btn-back {
+            background: #eef2f7;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1e3a6f;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .content-wrapper .btn-back:hover {
+            background: #dce3ed;
+        }
+        .content-wrapper .page-icon-big {
+            font-size: 64px;
+            display: block;
+            margin: 10px 0 8px;
+        }
+        .content-wrapper .page-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e3a6f;
+            margin-bottom: 4px;
+        }
+        .content-wrapper .page-desc {
+            font-size: 14px;
+            color: #5a6f8a;
+            margin-bottom: 20px;
+        }
+        .content-wrapper .btn-open-link {
+            background: #1e3a6f;
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(30, 58, 111, 0.3);
+            margin: 6px 0 12px;
+        }
+        .content-wrapper .btn-open-link:hover {
+            background: #16315a;
+            transform: scale(1.03);
+        }
+        .content-wrapper .btn-open-link:disabled {
+            background: #a0b2c9;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: white;
+            border-top: 1px solid #e6ecf5;
+            padding: 10px 0 8px;
+            margin: 24px -18px 0;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #7a8ea8;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            gap: 2px;
+            padding: 6px 10px;
+            border-radius: 14px;
+            flex: 1;
+            min-width: 50px;
+            max-width: 100px;
+            border: none;
+            background: transparent;
+        }
+        .bottom-nav .nav-item .nav-icon {
+            font-size: 22px;
+        }
+        .bottom-nav .nav-item span:last-child {
+            font-size: 9px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .bottom-nav .nav-item:hover {
+            color: #1e3a6f;
+            background: #f0f3f8;
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #a0b2c9;
+            padding: 16px 0 4px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e3a6f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 999;
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Utility */
+        .app-container.show-wrapper .menu-grid,
+        .app-container.show-wrapper .hero-card {
+            display: none;
+        }
+        .app-container.show-wrapper .content-wrapper {
+            display: block;
+        }
+
+        @media (min-width: 600px) {
+            .app-container { padding: 24px 28px; }
+            .app-title { font-size: 30px; }
+            .menu-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+            .menu-grid-item { min-height: 130px; }
+            .menu-grid-item .icon-wrapper { width: 52px; height: 52px; font-size: 26px; }
+            .menu-grid-item .label { font-size: 12px; }
+            .bottom-nav { margin: 24px -28px 0; }
+        }
+
+        @media (min-width: 1024px) {
+            .app-container { max-width: 1100px; padding: 28px 32px; }
+            .menu-grid { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+            .menu-grid-item { min-height: 150px; }
+            .menu-grid-item .icon-wrapper { width: 58px; height: 58px; font-size: 28px; }
+            .menu-grid-item .label { font-size: 13px; }
+            .bottom-nav { margin: 28px -32px 0; }
+        }
+
+        @media (max-width: 400px) {
+            .app-container { padding: 12px; }
+            .menu-grid { gap: 8px; }
+            .menu-grid-item { min-height: 100px; padding: 14px 4px 12px; }
+            .menu-grid-item .icon-wrapper { width: 40px; height: 40px; font-size: 20px; }
+            .menu-grid-item .label { font-size: 10px; }
+            .bottom-nav .nav-item { min-width: 40px; max-width: 80px; }
+            .bottom-nav .nav-item .nav-icon { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="appContainer">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="app-title-wrapper">
+                <div class="app-title">SIGULAS</div>
+                <div class="app-subtitle">Sistem Informasi Guru SMP Negeri 17 Surabaya</div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-refresh" id="refreshBtn">🔄</button>
+            </div>
+        </header>
+
+        <!-- HERO CARD -->
+        <div class="hero-card" id="heroCard">
+            <div class="time-badge" id="realTimeClock">⏰ 00.00</div>
+            <div class="hero-sub">Absen ditutup setiap pukul 10.00 WIB</div>
+            <div class="hero-sub2">Pastikan sudah mengisi absensi siswa sebelum batas waktu yang ditentukan</div>
+        </div>
+
+        <!-- MENU GRID -->
+        <div class="menu-grid" id="menuGrid"></div>
+
+        <!-- CONTENT WRAPPER -->
+        <div class="content-wrapper" id="contentWrapper">
+            <div class="back-row">
+                <button class="btn-back" id="backToHomeBtn">← Kembali ke Beranda</button>
+            </div>
+            <span class="page-icon-big" id="wrapperIcon">📄</span>
+            <div class="page-title" id="wrapperTitle">Judul Menu</div>
+            <div class="page-desc" id="wrapperDesc">Klik tombol di bawah untuk membuka tautan.</div>
+            <button class="btn-open-link" id="openLinkBtn">🔗 Buka Tautan</button>
+        </div>
+
+        <!-- BOTTOM NAV (MEDSOS) -->
+        <div class="bottom-nav">
+            <a href="https://smpnegeri17surabaya.sch.id" target="_blank" rel="noopener" class="nav-item">
+                <span class="nav-icon">🌐</span>
+                <span>Website</span>
+            </a>
+            <a href="https://instagram.com/smpn17sby_" target="_blank" rel="noopener" class="nav-item">
+                <span class="nav-icon">📷</span>
+                <span>@smpn17sby_</span>
+            </a>
+            <a href="https://tiktok.com/@galerispentulas" target="_blank" rel="noopener" class="nav-item">
+                <span class="nav-icon">🎵</span>
+                <span>@galerispentulas</span>
+            </a>
+            <a href="https://youtube.com/@smpn17sby" target="_blank" rel="noopener" class="nav-item">
+                <span class="nav-icon">📺</span>
+                <span>YouTube</span>
+            </a>
+        </div>
+
+        <div class="footer-note">SIGULAS v1.0 • Sistem Informasi Guru</div>
+    </div>
+
+    <div id="toast" class="toast">🔗 Membuka...</div>
+
+    <script>
+        (function() {
+            // ============================================
+            // DATA MENU
+            // ============================================
+            const menuData = [
+                { icon: '📝', label: 'Absensi Siswa', url: 'absensi.html', type: 'local' },
+                { icon: '📊', label: 'Rekap Absensi Siswa', url: 'rekap.html', type: 'local' },
+                { icon: '🗒️', label: 'Absensi Rapat Guru', url: 'rapat.html', type: 'local' },
+                { icon: '👨‍🏫', label: 'Wali Kelas', url: 'walas.html', type: 'local' },
+                { icon: '🌐', label: 'Portal GTK', url: 'geteka.html', type: 'local' },
+                { icon: '📌', label: 'Tugas Guru Izin', url: 'upload.html', type: 'local' },
+                { icon: '👀', label: 'Lihat Tugas Guru Izin', url: 'https://docs.google.com/spreadsheets/d/placeholder-edit', type: 'external' },
+                { icon: '📈', label: 'PMA', url: 'pma.html', type: 'local' },
+                { icon: '📚', label: 'Jadwal Pelajaran', url: 'jadwal.html', type: 'local' },
+                { icon: '🖼️', label: 'Galeri Kegiatan', url: 'galeri.html', type: 'local' },
+                { icon: '📅', label: 'Kalender Pendidikan', url: 'https://drive.google.com/file/d/placeholder-kalender/view', type: 'external' },
+                { icon: '📄', label: 'SKPBM TA 2026-2027', url: 'https://drive.google.com/file/d/placeholder-skpbm/view', type: 'external' }
+            ];
+
+            // ============================================
+            // DOM REFS
+            // ============================================
+            const grid = document.getElementById('menuGrid');
+            const wrapper = document.getElementById('contentWrapper');
+            const wrapperIcon = document.getElementById('wrapperIcon');
+            const wrapperTitle = document.getElementById('wrapperTitle');
+            const wrapperDesc = document.getElementById('wrapperDesc');
+            const openLinkBtn = document.getElementById('openLinkBtn');
+            const backToHomeBtn = document.getElementById('backToHomeBtn');
+            const appContainer = document.getElementById('appContainer');
+            const heroCard = document.getElementById('heroCard');
+            const toast = document.getElementById('toast');
+            let toastTimer = null;
+            let currentUrl = null;
+
+            // ============================================
+            // RENDER MENU
+            // ============================================
+            function renderMenus() {
+                if (!grid) return;
+                grid.innerHTML = menuData.map((item, index) => {
+                    const colorClass = `card-color-${index % 8}`;
+                    return `
+                        <button class="menu-grid-item ${colorClass}" data-index="${index}">
+                            <div class="icon-wrapper"><span>${item.icon}</span></div>
+                            <span class="label">${item.label}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                // Event listener
+                document.querySelectorAll('.menu-grid-item').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        const item = menuData[idx];
+                        if (item) handleMenuClick(item);
+                    });
+                });
+            }
+
+            // ============================================
+            // HANDLE MENU CLICK
+            // ============================================
+            function handleMenuClick(item) {
+                if (item.type === 'local') {
+                    if (item.url && item.url !== '#') {
+                        showToast(`🔗 Membuka: ${item.label}...`);
+                        window.open(item.url, '_blank');
+                    } else {
+                        showToast(`⚠️ Link untuk "${item.label}" belum tersedia`);
+                    }
+                } else {
+                    showWrapper(item);
+                }
+            }
+
+            // ============================================
+            // WRAPPER (untuk link eksternal)
+            // ============================================
+            function showWrapper(item) {
+                appContainer.classList.add('show-wrapper');
+                heroCard.style.display = 'none';
+
+                wrapperIcon.textContent = item.icon || '📄';
+                wrapperTitle.textContent = item.label || 'Menu';
+                currentUrl = item.url || null;
+
+                if (currentUrl) {
+                    wrapperDesc.textContent = 'Klik tombol di bawah untuk membuka tautan di tab baru.';
+                    openLinkBtn.disabled = false;
+                    openLinkBtn.style.display = 'inline-flex';
+                } else {
+                    wrapperDesc.textContent = 'Maaf, link untuk menu ini belum tersedia.';
+                    openLinkBtn.disabled = true;
+                    openLinkBtn.style.display = 'none';
+                }
+
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showToast(`📂 Buka: ${item.label}`);
+            }
+
+            function goHome() {
+                appContainer.classList.remove('show-wrapper');
+                heroCard.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast('🏠 Kembali ke Beranda');
+            }
+
+            function openExternalLink() {
+                if (currentUrl) {
+                    showToast('🔗 Membuka tautan...');
+                    window.open(currentUrl, '_blank');
+                } else {
+                    showToast('⚠️ Tidak ada tautan');
+                }
+            }
+
+            // ============================================
+            // TOAST
+            // ============================================
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+            }
+
+            // ============================================
+            // CLOCK
+            // ============================================
+            function updateClock() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                const el = document.getElementById('realTimeClock');
+                if (el) el.textContent = `⏰ ${h}.${m}`;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // ============================================
+            // EVENTS
+            // ============================================
+            document.getElementById('refreshBtn')?.addEventListener('click', () => {
+                showToast('🔄 Memuat ulang...');
+                setTimeout(() => window.location.reload(), 500);
+            });
+
+            backToHomeBtn?.addEventListener('click', goHome);
+            openLinkBtn?.addEventListener('click', openExternalLink);
+
+            // Bottom nav (medsos) dengan toast
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const url = this.getAttribute('href');
+                    const label = this.textContent.trim();
+                    if (url && url !== '#') {
+                        e.preventDefault();
+                        showToast(`🔗 Buka ${label}...`);
+                        setTimeout(() => window.open(url, '_blank'), 300);
+                    }
+                });
+            });
+
+            // ============================================
+            // INIT
+            // ============================================
+            renderMenus();
+
+            // Jika ada hash untuk wrapper
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === hash && m.type === 'external');
+                if (found) showWrapper(found);
+            }
+
+            // Hash change
+            window.addEventListener('hashchange', () => {
+                const h = window.location.hash.replace('#', '');
+                if (!h) { goHome(); return; }
+                const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === h && m.type === 'external');
+                if (found) showWrapper(found);
+                else goHome();
+            });
+
+            // Override showWrapper untuk set hash
+            const origShowWrapper = showWrapper;
+            showWrapper = function(item) {
+                const slug = item.label.toLowerCase().replace(/ /g, '-');
+                window.location.hash = slug;
+                origShowWrapper(item);
+            };
+
+            const origGoHome = goHome;
+            goHome = function() {
+                if (window.location.hash) {
+                    history.pushState(null, '', window.location.pathname);
+                }
+                origGoHome();
+            };
+
+            // Expose untuk debug
+            window.__SIGULAS = { menuData, goHome, showWrapper };
+        })();
+    </script>
+</body>
+</html>
