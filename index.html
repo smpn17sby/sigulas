@@ -276,71 +276,71 @@
             box-shadow: none;
         }
 
-        /* ===== BOTTOM NAV (MEDSOS) dengan Font Awesome ===== */
+        /* ===== BOTTOM NAV (MEDSOS) dengan warna cerah seperti grid card ===== */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
             align-items: center;
             background: white;
             border-top: 1px solid #e6ecf5;
-            padding: 10px 0 8px;
+            padding: 12px 0 10px;
             margin: 24px -18px 0;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 8px;
         }
         .bottom-nav .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             font-size: 10px;
-            color: #7a8ea8;
+            color: white; /* teks putih agar kontras */
             cursor: pointer;
             transition: 0.2s;
             text-decoration: none;
             gap: 4px;
-            padding: 6px 10px;
-            border-radius: 14px;
+            padding: 8px 12px;
+            border-radius: 16px;
             flex: 1;
-            min-width: 50px;
+            min-width: 60px;
             max-width: 100px;
             border: none;
-            background: transparent;
+            background: #eef2f7; /* default abu-abu, tapi akan ditimpa */
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
         .bottom-nav .nav-item .nav-icon {
             font-size: 26px;
             transition: transform 0.2s;
             width: 36px;
             text-align: center;
+            color: white; /* ikon putih */
         }
         .bottom-nav .nav-item span:last-child {
             font-size: 9px;
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
+            color: white; /* teks putih */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         .bottom-nav .nav-item:hover {
-            color: #1e3a6f;
-            background: #f0f3f8;
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
         }
         .bottom-nav .nav-item:hover .nav-icon {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
-        .bottom-nav .nav-item[data-platform="website"]:hover {
-            color: #0a66c2;
-            background: #e8f0fe;
+        /* Warna latar belakang khusus untuk setiap platform (seperti card-color) */
+        .bottom-nav .nav-item[data-platform="website"] {
+            background: linear-gradient(135deg, #0a66c2, #084a8a);
         }
-        .bottom-nav .nav-item[data-platform="instagram"]:hover {
-            color: #d62976;
-            background: #fce4ec;
+        .bottom-nav .nav-item[data-platform="instagram"] {
+            background: linear-gradient(135deg, #d62976, #b5175e);
         }
-        .bottom-nav .nav-item[data-platform="tiktok"]:hover {
-            color: #000000;
-            background: #f0f0f0;
+        .bottom-nav .nav-item[data-platform="tiktok"] {
+            background: linear-gradient(135deg, #000000, #1a1a1a);
         }
-        .bottom-nav .nav-item[data-platform="youtube"]:hover {
-            color: #ff0000;
-            background: #fde8e8;
+        .bottom-nav .nav-item[data-platform="youtube"] {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
         }
 
         .footer-note {
@@ -389,7 +389,7 @@
             .menu-grid-item .icon-wrapper { width: 52px; height: 52px; font-size: 26px; }
             .menu-grid-item .label { font-size: 12px; }
             .bottom-nav { margin: 24px -28px 0; }
-            .bottom-nav .nav-item { max-width: 120px; }
+            .bottom-nav .nav-item { max-width: 120px; padding: 10px 16px; }
             .bottom-nav .nav-item .nav-icon { font-size: 28px; }
         }
 
@@ -409,7 +409,7 @@
             .menu-grid-item { min-height: 100px; padding: 14px 4px 12px; }
             .menu-grid-item .icon-wrapper { width: 40px; height: 40px; font-size: 20px; }
             .menu-grid-item .label { font-size: 10px; }
-            .bottom-nav .nav-item { min-width: 40px; max-width: 80px; }
+            .bottom-nav .nav-item { min-width: 50px; max-width: 80px; padding: 6px 8px; }
             .bottom-nav .nav-item .nav-icon { font-size: 22px; }
         }
     </style>
@@ -448,7 +448,7 @@
             <button class="btn-open-link" id="openLinkBtn">🔗 Buka Tautan</button>
         </div>
 
-        <!-- BOTTOM NAV (MEDSOS) -->
+        <!-- BOTTOM NAV (MEDSOS) dengan warna cerah -->
         <div class="bottom-nav">
             <a href="https://www.smpnegeri17surabaya.sch.id" target="_blank" rel="noopener" class="nav-item" data-platform="website">
                 <span class="nav-icon"><i class="fas fa-globe"></i></span>
@@ -486,7 +486,7 @@
                 { icon: '🌐', label: 'Portal GTK', url: 'geteka.html', type: 'local' },
                 { icon: '📌', label: 'Tugas Guru Izin', url: 'upload.html', type: 'local' },
                 { icon: '👀', label: 'Lihat Tugas Guru Izin', url: 'https://docs.google.com/spreadsheets/d/placeholder-edit', type: 'external', direct: true },
-                { icon: '📈', label: 'PMA', url: 'https://sites.google.com/guru.smp.belajar.id/pma/pma', type: 'external', direct: true }, // DIREK
+                { icon: '📈', label: 'PMA', url: 'https://sites.google.com/guru.smp.belajar.id/pma/pma', type: 'external', direct: true },
                 { icon: '📚', label: 'Jadwal Pelajaran', url: 'jadwal.html', type: 'local' },
                 { icon: '🖼️', label: 'Galeri Kegiatan', url: 'galeri.html', type: 'local' },
                 { icon: '📅', label: 'Kalender Pendidikan', url: 'https://drive.google.com/file/d/1eyUwfRt2Bo_3Zo4pHiZeQKtP-J44LwZy/view?usp=sharing', type: 'external', direct: true },
@@ -596,7 +596,6 @@
                 heroCard.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 showToast('🏠 Kembali ke Beranda');
-                // Hapus hash jika ada
                 if (window.location.hash) {
                     history.pushState(null, '', window.location.pathname);
                 }
@@ -649,7 +648,6 @@
             backToHomeBtn?.addEventListener('click', goHome);
             openLinkBtn?.addEventListener('click', openExternalLink);
 
-            // Bottom nav (medsos) dengan toast dan penanganan error
             document.querySelectorAll('.bottom-nav .nav-item').forEach(link => {
                 link.addEventListener('click', function(e) {
                     const url = this.getAttribute('href');
@@ -671,7 +669,6 @@
             // ============================================
             renderMenus();
 
-            // Dukungan hash untuk menu non-direct
             const hash = window.location.hash.replace('#', '');
             if (hash) {
                 const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === hash && m.type === 'external' && !m.direct);
@@ -686,7 +683,6 @@
                 else goHome();
             });
 
-            // Override showWrapper dan goHome untuk update hash
             const origShowWrapper = showWrapper;
             showWrapper = function(item) {
                 const slug = item.label.toLowerCase().replace(/ /g, '-');
