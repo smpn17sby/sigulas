@@ -14,7 +14,11 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="SIGULAS">
 
+    <!-- FONT AWESOME (untuk ikon media sosial) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
+        /* ===== GAYA SEPERTI SEBELUMNYA ===== */
         * {
             margin: 0;
             padding: 0;
@@ -146,7 +150,7 @@
             position: relative;
             overflow: hidden;
             width: 100%;
-            background: #1976d2; /* fallback */
+            background: #1976d2;
         }
         .menu-grid-item:hover {
             transform: translateY(-4px);
@@ -272,7 +276,7 @@
             box-shadow: none;
         }
 
-        /* BOTTOM NAV */
+        /* ===== BOTTOM NAV (MEDSOS) dengan Font Awesome ===== */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -293,7 +297,7 @@
             cursor: pointer;
             transition: 0.2s;
             text-decoration: none;
-            gap: 2px;
+            gap: 4px;
             padding: 6px 10px;
             border-radius: 14px;
             flex: 1;
@@ -303,7 +307,10 @@
             background: transparent;
         }
         .bottom-nav .nav-item .nav-icon {
-            font-size: 22px;
+            font-size: 26px;
+            transition: transform 0.2s;
+            width: 36px;
+            text-align: center;
         }
         .bottom-nav .nav-item span:last-child {
             font-size: 9px;
@@ -314,6 +321,27 @@
             color: #1e3a6f;
             background: #f0f3f8;
             transform: translateY(-2px);
+        }
+        .bottom-nav .nav-item:hover .nav-icon {
+            transform: scale(1.1);
+        }
+
+        /* Warna ikon saat hover sesuai brand */
+        .bottom-nav .nav-item[data-platform="website"]:hover {
+            color: #0a66c2;
+            background: #e8f0fe;
+        }
+        .bottom-nav .nav-item[data-platform="instagram"]:hover {
+            color: #d62976;
+            background: #fce4ec;
+        }
+        .bottom-nav .nav-item[data-platform="tiktok"]:hover {
+            color: #000000;
+            background: #f0f0f0;
+        }
+        .bottom-nav .nav-item[data-platform="youtube"]:hover {
+            color: #ff0000;
+            background: #fde8e8;
         }
 
         .footer-note {
@@ -363,6 +391,8 @@
             .menu-grid-item .icon-wrapper { width: 52px; height: 52px; font-size: 26px; }
             .menu-grid-item .label { font-size: 12px; }
             .bottom-nav { margin: 24px -28px 0; }
+            .bottom-nav .nav-item { max-width: 120px; }
+            .bottom-nav .nav-item .nav-icon { font-size: 28px; }
         }
 
         @media (min-width: 1024px) {
@@ -372,6 +402,7 @@
             .menu-grid-item .icon-wrapper { width: 58px; height: 58px; font-size: 28px; }
             .menu-grid-item .label { font-size: 13px; }
             .bottom-nav { margin: 28px -32px 0; }
+            .bottom-nav .nav-item .nav-icon { font-size: 30px; }
         }
 
         @media (max-width: 400px) {
@@ -381,7 +412,7 @@
             .menu-grid-item .icon-wrapper { width: 40px; height: 40px; font-size: 20px; }
             .menu-grid-item .label { font-size: 10px; }
             .bottom-nav .nav-item { min-width: 40px; max-width: 80px; }
-            .bottom-nav .nav-item .nav-icon { font-size: 18px; }
+            .bottom-nav .nav-item .nav-icon { font-size: 22px; }
         }
     </style>
 </head>
@@ -419,22 +450,24 @@
             <button class="btn-open-link" id="openLinkBtn">🔗 Buka Tautan</button>
         </div>
 
-        <!-- BOTTOM NAV (MEDSOS) -->
+        <!-- ============================================================ -->
+        <!-- BOTTOM NAV (MEDSOS) dengan Font Awesome -->
+        <!-- ============================================================ -->
         <div class="bottom-nav">
-            <a href="https://smpnegeri17surabaya.sch.id" target="_blank" rel="noopener" class="nav-item">
-                <span class="nav-icon">🌐</span>
+            <a href="https://www.smpnegeri17surabaya.sch.id" target="_blank" rel="noopener" class="nav-item" data-platform="website">
+                <span class="nav-icon"><i class="fas fa-globe"></i></span>
                 <span>Website</span>
             </a>
-            <a href="https://instagram.com/smpn17sby_" target="_blank" rel="noopener" class="nav-item">
-                <span class="nav-icon">📷</span>
+            <a href="https://instagram.com/smpn17sby_" target="_blank" rel="noopener" class="nav-item" data-platform="instagram">
+                <span class="nav-icon"><i class="fab fa-instagram"></i></span>
                 <span>@smpn17sby_</span>
             </a>
-            <a href="https://tiktok.com/@galerispentulas" target="_blank" rel="noopener" class="nav-item">
-                <span class="nav-icon">🎵</span>
+            <a href="https://tiktok.com/@galerispentulas" target="_blank" rel="noopener" class="nav-item" data-platform="tiktok">
+                <span class="nav-icon"><i class="fab fa-tiktok"></i></span>
                 <span>@galerispentulas</span>
             </a>
-            <a href="https://youtube.com/@smpn17sby" target="_blank" rel="noopener" class="nav-item">
-                <span class="nav-icon">📺</span>
+            <a href="https://www.youtube.com/@SMPNEGERI17SURABAYA" target="_blank" rel="noopener" class="nav-item" data-platform="youtube">
+                <span class="nav-icon"><i class="fab fa-youtube"></i></span>
                 <span>YouTube</span>
             </a>
         </div>
@@ -450,7 +483,7 @@
             // DATA MENU
             // ============================================
             const menuData = [
-                { icon: '📝', label: 'Absensi Siswa', url: 'absensi.html', type: 'local' },
+                { icon: '📝', label: 'Absensi Siswa', url: 'https://script.google.com/macros/s/AKfycbxE5upN6xjJFfTk6TodJ9pQBmBm47bXvkNonW-cYhY/dev', type: 'external', direct: true },
                 { icon: '📊', label: 'Rekap Absensi Siswa', url: 'rekap.html', type: 'local' },
                 { icon: '🗒️', label: 'Absensi Rapat Guru', url: 'rapat.html', type: 'local' },
                 { icon: '👨‍🏫', label: 'Wali Kelas', url: 'walas.html', type: 'local' },
@@ -460,8 +493,8 @@
                 { icon: '📈', label: 'PMA', url: 'pma.html', type: 'local' },
                 { icon: '📚', label: 'Jadwal Pelajaran', url: 'jadwal.html', type: 'local' },
                 { icon: '🖼️', label: 'Galeri Kegiatan', url: 'galeri.html', type: 'local' },
-                { icon: '📅', label: 'Kalender Pendidikan', url: 'https://drive.google.com/file/d/placeholder-kalender/view', type: 'external' },
-                { icon: '📄', label: 'SKPBM TA 2026-2027', url: 'https://drive.google.com/file/d/placeholder-skpbm/view', type: 'external' }
+                { icon: '📅', label: 'Kalender Pendidikan', url: 'https://drive.google.com/file/d/1eyUwfRt2Bo_3Zo4pHiZeQKtP-J44LwZy/view?usp=sharing', type: 'external' },
+                { icon: '📄', label: 'SKPBM TA 2026-2027', url: 'https://drive.google.com/file/d/13aeB6AY3EKrEKJn_nHBupmoqnLLRjmGQ/view?usp=sharing', type: 'external' }
             ];
 
             // ============================================
@@ -495,7 +528,6 @@
                     `;
                 }).join('');
 
-                // Event listener
                 document.querySelectorAll('.menu-grid-item').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const idx = parseInt(this.dataset.index);
@@ -517,12 +549,21 @@
                         showToast(`⚠️ Link untuk "${item.label}" belum tersedia`);
                     }
                 } else {
-                    showWrapper(item);
+                    if (item.direct) {
+                        if (item.url && item.url !== '#') {
+                            showToast(`🔗 Membuka: ${item.label}...`);
+                            window.open(item.url, '_blank');
+                        } else {
+                            showToast(`⚠️ Link untuk "${item.label}" belum tersedia`);
+                        }
+                    } else {
+                        showWrapper(item);
+                    }
                 }
             }
 
             // ============================================
-            // WRAPPER (untuk link eksternal)
+            // WRAPPER
             // ============================================
             function showWrapper(item) {
                 appContainer.classList.add('show-wrapper');
@@ -614,23 +655,20 @@
             // ============================================
             renderMenus();
 
-            // Jika ada hash untuk wrapper
             const hash = window.location.hash.replace('#', '');
             if (hash) {
-                const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === hash && m.type === 'external');
+                const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === hash && m.type === 'external' && !m.direct);
                 if (found) showWrapper(found);
             }
 
-            // Hash change
             window.addEventListener('hashchange', () => {
                 const h = window.location.hash.replace('#', '');
                 if (!h) { goHome(); return; }
-                const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === h && m.type === 'external');
+                const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === h && m.type === 'external' && !m.direct);
                 if (found) showWrapper(found);
                 else goHome();
             });
 
-            // Override showWrapper untuk set hash
             const origShowWrapper = showWrapper;
             showWrapper = function(item) {
                 const slug = item.label.toLowerCase().replace(/ /g, '-');
@@ -646,7 +684,6 @@
                 origGoHome();
             };
 
-            // Expose untuk debug
             window.__SIGULAS = { menuData, goHome, showWrapper };
         })();
     </script>
