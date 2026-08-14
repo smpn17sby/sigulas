@@ -14,7 +14,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="SIGULAS">
 
-    <!-- FONT AWESOME (untuk ikon media sosial) -->
+    <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -326,7 +326,6 @@
             transform: scale(1.1);
         }
 
-        /* Warna ikon saat hover sesuai brand */
         .bottom-nav .nav-item[data-platform="website"]:hover {
             color: #0a66c2;
             background: #e8f0fe;
@@ -374,7 +373,6 @@
             opacity: 1;
         }
 
-        /* Utility */
         .app-container.show-wrapper .menu-grid,
         .app-container.show-wrapper .hero-card {
             display: none;
@@ -450,9 +448,7 @@
             <button class="btn-open-link" id="openLinkBtn">🔗 Buka Tautan</button>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- BOTTOM NAV (MEDSOS) dengan Font Awesome -->
-        <!-- ============================================================ -->
+        <!-- BOTTOM NAV (MEDSOS) -->
         <div class="bottom-nav">
             <a href="https://www.smpnegeri17surabaya.sch.id" target="_blank" rel="noopener" class="nav-item" data-platform="website">
                 <span class="nav-icon"><i class="fas fa-globe"></i></span>
@@ -480,7 +476,7 @@
     <script>
         (function() {
             // ============================================
-            // DATA MENU
+            // DATA MENU (dengan perbaikan: PMA direct = true)
             // ============================================
             const menuData = [
                 { icon: '📝', label: 'Absensi Siswa', url: 'https://script.google.com/macros/s/AKfycbxE5upN6xjJFfTk6TodJ9pQBmBm47bXvkNonW-cYhY/dev', type: 'external', direct: true },
@@ -489,12 +485,12 @@
                 { icon: '👨‍🏫', label: 'Wali Kelas', url: 'walas.html', type: 'local' },
                 { icon: '🌐', label: 'Portal GTK', url: 'geteka.html', type: 'local' },
                 { icon: '📌', label: 'Tugas Guru Izin', url: 'upload.html', type: 'local' },
-                { icon: '👀', label: 'Lihat Tugas Guru Izin', url: 'https://docs.google.com/spreadsheets/d/placeholder-edit', type: 'external' },
-                { icon: '📈', label: 'PMA', url: 'https://sites.google.com/guru.smp.belajar.id/pma/pma', type: 'external' },
+                { icon: '👀', label: 'Lihat Tugas Guru Izin', url: 'https://docs.google.com/spreadsheets/d/placeholder-edit', type: 'external', direct: true },
+                { icon: '📈', label: 'PMA', url: 'https://sites.google.com/guru.smp.belajar.id/pma/pma', type: 'external', direct: true }, // DIREK
                 { icon: '📚', label: 'Jadwal Pelajaran', url: 'jadwal.html', type: 'local' },
                 { icon: '🖼️', label: 'Galeri Kegiatan', url: 'galeri.html', type: 'local' },
-                { icon: '📅', label: 'Kalender Pendidikan', url: 'https://drive.google.com/file/d/1eyUwfRt2Bo_3Zo4pHiZeQKtP-J44LwZy/view?usp=sharing', type: 'external' },
-                { icon: '📄', label: 'SKPBM TA 2026-2027', url: 'https://drive.google.com/file/d/13aeB6AY3EKrEKJn_nHBupmoqnLLRjmGQ/view?usp=sharing', type: 'external' }
+                { icon: '📅', label: 'Kalender Pendidikan', url: 'https://drive.google.com/file/d/1eyUwfRt2Bo_3Zo4pHiZeQKtP-J44LwZy/view?usp=sharing', type: 'external', direct: true },
+                { icon: '📄', label: 'SKPBM TA 2026-2027', url: 'https://drive.google.com/file/d/13aeB6AY3EKrEKJn_nHBupmoqnLLRjmGQ/view?usp=sharing', type: 'external', direct: true }
             ];
 
             // ============================================
@@ -544,7 +540,11 @@
                 if (item.type === 'local') {
                     if (item.url && item.url !== '#') {
                         showToast(`🔗 Membuka: ${item.label}...`);
-                        window.open(item.url, '_blank');
+                        try {
+                            window.open(item.url, '_blank');
+                        } catch (e) {
+                            showToast('⚠️ Popup diblokir, izinkan popup untuk menu ini.');
+                        }
                     } else {
                         showToast(`⚠️ Link untuk "${item.label}" belum tersedia`);
                     }
@@ -552,7 +552,11 @@
                     if (item.direct) {
                         if (item.url && item.url !== '#') {
                             showToast(`🔗 Membuka: ${item.label}...`);
-                            window.open(item.url, '_blank');
+                            try {
+                                window.open(item.url, '_blank');
+                            } catch (e) {
+                                showToast('⚠️ Popup diblokir, izinkan popup untuk menu ini.');
+                            }
                         } else {
                             showToast(`⚠️ Link untuk "${item.label}" belum tersedia`);
                         }
@@ -592,12 +596,20 @@
                 heroCard.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 showToast('🏠 Kembali ke Beranda');
+                // Hapus hash jika ada
+                if (window.location.hash) {
+                    history.pushState(null, '', window.location.pathname);
+                }
             }
 
             function openExternalLink() {
                 if (currentUrl) {
                     showToast('🔗 Membuka tautan...');
-                    window.open(currentUrl, '_blank');
+                    try {
+                        window.open(currentUrl, '_blank');
+                    } catch (e) {
+                        showToast('⚠️ Popup diblokir, izinkan popup untuk tautan ini.');
+                    }
                 } else {
                     showToast('⚠️ Tidak ada tautan');
                 }
@@ -637,7 +649,7 @@
             backToHomeBtn?.addEventListener('click', goHome);
             openLinkBtn?.addEventListener('click', openExternalLink);
 
-            // Bottom nav (medsos) dengan toast
+            // Bottom nav (medsos) dengan toast dan penanganan error
             document.querySelectorAll('.bottom-nav .nav-item').forEach(link => {
                 link.addEventListener('click', function(e) {
                     const url = this.getAttribute('href');
@@ -645,7 +657,11 @@
                     if (url && url !== '#') {
                         e.preventDefault();
                         showToast(`🔗 Buka ${label}...`);
-                        setTimeout(() => window.open(url, '_blank'), 300);
+                        try {
+                            window.open(url, '_blank');
+                        } catch (err) {
+                            showToast('⚠️ Gagal membuka tautan, periksa pengaturan popup.');
+                        }
                     }
                 });
             });
@@ -655,6 +671,7 @@
             // ============================================
             renderMenus();
 
+            // Dukungan hash untuk menu non-direct
             const hash = window.location.hash.replace('#', '');
             if (hash) {
                 const found = menuData.find(m => m.label.toLowerCase().replace(/ /g, '-') === hash && m.type === 'external' && !m.direct);
@@ -669,6 +686,7 @@
                 else goHome();
             });
 
+            // Override showWrapper dan goHome untuk update hash
             const origShowWrapper = showWrapper;
             showWrapper = function(item) {
                 const slug = item.label.toLowerCase().replace(/ /g, '-');
