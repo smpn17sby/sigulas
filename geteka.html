@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #f0f3f8;
+            background: #0a3d0a;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -25,14 +25,13 @@
         .container {
             max-width: 1000px;
             width: 100%;
-            background: white;
+            background: #ffffff;
             border-radius: 24px;
             padding: 40px 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
             position: relative;
         }
 
-        /* Tombol Kembali */
         .back-btn {
             position: absolute;
             top: 20px;
@@ -40,27 +39,28 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #eef2f7;
+            background: #f0f7f0;
             padding: 8px 18px;
             border-radius: 40px;
             text-decoration: none;
-            color: #1e3a6f;
+            color: #0a3d0a;
             font-weight: 700;
             font-size: 13px;
             transition: 0.2s;
-            border: none;
-            cursor: pointer;
+            border: 2px solid #c8e0c8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             z-index: 10;
         }
         .back-btn:hover {
-            background: #dce3ed;
+            background: #ffffff;
             transform: scale(1.02);
+            border-color: #0a3d0a;
+            box-shadow: 0 4px 12px rgba(10, 61, 10, 0.15);
         }
         .back-btn:active {
             transform: scale(0.96);
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -71,22 +71,22 @@
             width: 100px;
             height: auto;
             margin-bottom: 8px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .header h1 {
             font-size: 28px;
             font-weight: 800;
-            color: #1e3a6f;
+            color: #0a3d0a;
             letter-spacing: -0.5px;
         }
 
         .header .sub {
             font-size: 14px;
-            color: #5a6f8a;
+            color: #3d6b3d;
             margin-top: 2px;
         }
 
-        /* Grid Menu */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -94,15 +94,15 @@
         }
 
         .menu-item {
-            background: #f8faff;
-            border: 2px solid #eef2f7;
+            background: #f5faf5;
+            border: 2px solid #d0e6d0;
             border-radius: 16px;
             padding: 24px 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
             text-decoration: none;
-            color: #1e3a6f;
+            color: #0a3d0a;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -110,9 +110,9 @@
         }
         .menu-item:hover {
             transform: translateY(-4px);
-            border-color: #1e3a6f;
-            background: #f0f4ff;
-            box-shadow: 0 6px 16px rgba(30, 58, 111, 0.10);
+            border-color: #0a3d0a;
+            background: #e6f5e6;
+            box-shadow: 0 6px 16px rgba(10, 61, 10, 0.10);
         }
         .menu-item:active {
             transform: scale(0.96);
@@ -126,75 +126,48 @@
         }
         .menu-item .desc {
             font-size: 11px;
-            color: #7a8ea8;
+            color: #3d6b3d;
             line-height: 1.3;
         }
 
-        /* Responsive */
+        .footer-note {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 12px;
+            color: #3d6b3d;
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 30px 16px;
-            }
-            .back-btn {
-                position: static;
-                margin-bottom: 16px;
-                display: inline-flex;
-            }
-            .header h1 {
-                font-size: 22px;
-            }
-            .logo {
-                width: 70px;
-            }
-            .menu-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            .menu-item {
-                padding: 18px 10px;
-            }
-            .menu-item .icon {
-                font-size: 28px;
-            }
-            .menu-item .label {
-                font-size: 13px;
-            }
+            .container { padding: 30px 16px; }
+            .back-btn { position: static; margin-bottom: 16px; display: inline-flex; }
+            .header h1 { font-size: 22px; }
+            .logo { width: 70px; }
+            .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .menu-item { padding: 18px 10px; }
+            .menu-item .icon { font-size: 28px; }
+            .menu-item .label { font-size: 13px; }
         }
 
         @media (max-width: 400px) {
-            .menu-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .menu-item {
-                padding: 14px 8px;
-            }
-            .menu-item .icon {
-                font-size: 24px;
-            }
-            .menu-item .label {
-                font-size: 12px;
-            }
-            .menu-item .desc {
-                font-size: 10px;
-            }
+            .menu-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .menu-item { padding: 14px 8px; }
+            .menu-item .icon { font-size: 24px; }
+            .menu-item .label { font-size: 12px; }
+            .menu-item .desc { font-size: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
 
-        <!-- Tombol Kembali ke Beranda SIGULAS -->
         <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
 
-        <!-- Header dengan logo lokal -->
         <div class="header">
-            <img src="kemendikdasmen.png" alt="Kemendikdasmen" class="logo" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Logo_Kemendikbud_RI_2021.svg/1200px-Logo_Kemendikbud_RI_2021.svg.png" alt="Kemendikdasmen" class="logo" />
             <h1>Portal Layanan GTK</h1>
             <div class="sub">SMP Negeri 17 Surabaya</div>
         </div>
 
-        <!-- Grid Menu -->
         <div class="menu-grid">
             <!-- Info GTK -->
             <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-info-gtk">
@@ -244,28 +217,32 @@
                 <span class="label">Sinau Bareng</span>
                 <span class="desc">Belajar bersama</span>
             </a>
+
+            <!-- GP Digital (BARU) -->
+            <a href="#" target="_blank" rel="noopener" class="menu-item" id="menu-gp-digital">
+                <span class="icon">🏅</span>
+                <span class="label">GP Digital</span>
+                <span class="desc">Guru Penggerak Digital</span>
+            </a>
         </div>
 
-        <p style="text-align:center; margin-top:24px; font-size:12px; color:#a0b2c9;">
+        <div class="footer-note">
             Klik menu untuk membuka layanan di tab baru.
-        </p>
+        </div>
     </div>
 
     <script>
-        // ============================================================
-        //  GANTI LINK DI BAWAH INI DENGAN URL ASLI MASING-MASING LAYANAN
-        // ============================================================
         const LINKS = {
-            'info-gtk': 'https://info.gtk.kemdikbud.go.id/',
-            'asn-digital': 'https://asn-digital.kemdikbud.go.id/',
-            'sim-pkb': 'https://sim-pkb.kemdikbud.go.id/',
-            'pengelolaan-kinerja': 'https://pengelolaan-kinerja.kemdikbud.go.id/',
-            'rapor-online': 'https://rapor-online.kemdikbud.go.id/',
-            'edocu': 'https://edocu.kemdikbud.go.id/',
-            'sinau-bareng': 'https://sinau-bareng.kemdikbud.go.id/'
+            'info-gtk': 'https://info.gtk.kemendikdasmen.go.id//',
+            'asn-digital': 'https://asndigital.bkn.go.id/login/',
+            'sim-pkb': 'https://app.simpkb.id/login/',
+            'pengelolaan-kinerja': 'https://guru.kemendikdasmen.go.id/pengelolaan-kinerja/',
+            'rapor-online': 'https://rapordispendik.surabaya.go.id//',
+            'edocu': 'https://sdm.surabaya.go.id//',
+            'sinau-bareng': 'https://dispendik.surabaya.go.id/sinau-bareng//',
+            'gp-digital': 'https://s.id/Digitalisasi-SMP/'
         };
 
-        // Set href untuk setiap menu
         document.getElementById('menu-info-gtk').href = LINKS['info-gtk'];
         document.getElementById('menu-asn-digital').href = LINKS['asn-digital'];
         document.getElementById('menu-sim-pkb').href = LINKS['sim-pkb'];
@@ -273,8 +250,8 @@
         document.getElementById('menu-rapor-online').href = LINKS['rapor-online'];
         document.getElementById('menu-edocu').href = LINKS['edocu'];
         document.getElementById('menu-sinau-bareng').href = LINKS['sinau-bareng'];
+        document.getElementById('menu-gp-digital').href = LINKS['gp-digital'];
 
-        // Jika link masih placeholder (mengandung placeholder), beri notifikasi saat diklik
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
