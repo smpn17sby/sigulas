@@ -14,6 +14,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="SIGULAS">
 
+    <!-- MANIFEST -->
+    <link rel="manifest" href="manifest.json">
+
     <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -91,6 +94,38 @@
         }
         .btn-refresh:hover {
             background: #dce3ed;
+        }
+
+        /* ===== TOMBOL INSTALL ===== */
+        .btn-install {
+            background: #8e24aa;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none; /* disembunyikan secara default, akan muncul via JS */
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(142, 36, 170, 0.25);
+            animation: pulseInstall 2s infinite;
+        }
+        .btn-install.show {
+            display: inline-flex;
+        }
+        .btn-install:hover {
+            background: #7b1fa2;
+            transform: scale(1.05);
+        }
+        .btn-install:active {
+            transform: scale(0.97);
+        }
+        @keyframes pulseInstall {
+            0%, 100% { box-shadow: 0 2px 8px rgba(142, 36, 170, 0.25); }
+            50% { box-shadow: 0 2px 20px rgba(142, 36, 170, 0.6); }
         }
 
         /* HERO CARD */
@@ -276,7 +311,7 @@
             box-shadow: none;
         }
 
-        /* ===== BOTTOM NAV (MEDSOS) dengan warna cerah seperti grid card ===== */
+        /* ===== BOTTOM NAV (MEDSOS) ===== */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -293,7 +328,7 @@
             flex-direction: column;
             align-items: center;
             font-size: 10px;
-            color: white; /* teks putih agar kontras */
+            color: white;
             cursor: pointer;
             transition: 0.2s;
             text-decoration: none;
@@ -304,7 +339,7 @@
             min-width: 60px;
             max-width: 100px;
             border: none;
-            background: #eef2f7; /* default abu-abu, tapi akan ditimpa */
+            background: #eef2f7;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
         .bottom-nav .nav-item .nav-icon {
@@ -312,13 +347,13 @@
             transition: transform 0.2s;
             width: 36px;
             text-align: center;
-            color: white; /* ikon putih */
+            color: white;
         }
         .bottom-nav .nav-item span:last-child {
             font-size: 9px;
             text-align: center;
             font-weight: 600;
-            color: white; /* teks putih */
+            color: white;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         .bottom-nav .nav-item:hover {
@@ -329,7 +364,6 @@
             transform: scale(1.15);
         }
 
-        /* Warna latar belakang khusus untuk setiap platform (seperti card-color) */
         .bottom-nav .nav-item[data-platform="website"] {
             background: linear-gradient(135deg, #0a66c2, #084a8a);
         }
@@ -423,6 +457,10 @@
                 <div class="app-subtitle">Sistem Informasi Guru SMP Negeri 17 Surabaya</div>
             </div>
             <div class="header-actions">
+                <!-- TOMBOL INSTALL PWA -->
+                <button class="btn-install" id="installBtn">
+                    <i class="fas fa-download"></i> Install
+                </button>
                 <button class="btn-refresh" id="refreshBtn">🔄</button>
             </div>
         </header>
@@ -448,7 +486,7 @@
             <button class="btn-open-link" id="openLinkBtn">🔗 Buka Tautan</button>
         </div>
 
-        <!-- BOTTOM NAV (MEDSOS) dengan warna cerah -->
+        <!-- BOTTOM NAV (MEDSOS) -->
         <div class="bottom-nav">
             <a href="https://www.smpnegeri17surabaya.sch.id" target="_blank" rel="noopener" class="nav-item" data-platform="website">
                 <span class="nav-icon"><i class="fas fa-globe"></i></span>
@@ -476,7 +514,7 @@
     <script>
         (function() {
             // ============================================
-            // DATA MENU (dengan perbaikan: PMA direct = true)
+            // DATA MENU
             // ============================================
             const menuData = [
                 { icon: '📝', label: 'Absensi Siswa', url: 'https://sites.google.com/guru.smp.belajar.id/presensi-siswa-p17/absensi-siswa', type: 'external', direct: true },
@@ -506,8 +544,10 @@
             const appContainer = document.getElementById('appContainer');
             const heroCard = document.getElementById('heroCard');
             const toast = document.getElementById('toast');
+            const installBtn = document.getElementById('installBtn');
             let toastTimer = null;
             let currentUrl = null;
+            let deferredPrompt = null;
 
             // ============================================
             // RENDER MENU
@@ -636,6 +676,47 @@
             }
             setInterval(updateClock, 1000);
             updateClock();
+
+            // ============================================
+            // PWA INSTALL
+            // ============================================
+            // Tangkap event beforeinstallprompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installBtn.classList.add('show');
+            });
+
+            // Saat aplikasi berhasil diinstall
+            window.addEventListener('appinstalled', () => {
+                deferredPrompt = null;
+                installBtn.classList.remove('show');
+                showToast('✅ SIGULAS berhasil dipasang!');
+            });
+
+            // Sembunyikan tombol jika sudah dalam mode standalone
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+                installBtn.style.display = 'none';
+            }
+
+            // Fungsi trigger install
+            async function triggerInstall() {
+                if (!deferredPrompt) {
+                    showToast('ℹ️ Buka menu browser (⋮) → "Install aplikasi" atau "Add to Home Screen"');
+                    return;
+                }
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showToast('✅ Sedang memasang SIGULAS...');
+                } else {
+                    showToast('❌ Instalasi dibatalkan.');
+                }
+                deferredPrompt = null;
+                installBtn.classList.remove('show');
+            }
+
+            installBtn?.addEventListener('click', triggerInstall);
 
             // ============================================
             // EVENTS
